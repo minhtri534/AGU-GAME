@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 10f; 
+    [SerializeField] private float rotationSpeed = 10f;
 
     private Rigidbody rb;
     private Vector3 movementInput;
@@ -11,28 +12,39 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
         rb.freezeRotation = true;
-        rb.useGravity = false; 
+        rb.useGravity = false;
     }
 
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        if (Keyboard.current == null) return;
 
-        movementInput = new Vector3(horizontal, 0f, vertical).normalized;
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (Keyboard.current.aKey.isPressed) horizontal = -1f;
+        else if (Keyboard.current.dKey.isPressed) horizontal = 1f;
+
+        if (Keyboard.current.wKey.isPressed) vertical = 1f;
+        else if (Keyboard.current.sKey.isPressed) vertical = -1f;
+
+        movementInput = new Vector3(-horizontal, 0f, -vertical).normalized;
     }
 
     void FixedUpdate()
     {
-        Vector3 nextPosition = rb.position + movementInput * moveSpeed * Time.fixedDeltaTime;
+        if (movementInput == Vector3.zero)
+            return;
+
+        Vector3 nextPosition =
+            rb.position + movementInput * moveSpeed * Time.fixedDeltaTime;
+
         rb.MovePosition(nextPosition);
 
-        if (movementInput != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(movementInput);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        }
+        Quaternion targetRotation = Quaternion.LookRotation(movementInput);
+        rb.MoveRotation(
+            Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime)
+        );
     }
 }

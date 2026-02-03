@@ -18,9 +18,9 @@ public class PlayerMotor
         if (direction == Vector3.zero)
             return;
 
-        Vector3 nextPosition =rb.position + direction * moveSpeed * Time.fixedDeltaTime;
+        Vector3 nextPosition = rb.position + direction * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(nextPosition);
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+        //Quaternion targetRotation = Quaternion.LookRotation(direction);
+        //rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
     }
 }

@@ -189,7 +189,7 @@ public class WeaponController : MonoBehaviour
             var rb = obj.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.velocity = direction * currentProjectileSpeed;
+                rb.linearVelocity = direction * currentProjectileSpeed;
             }
         }
     }

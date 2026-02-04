@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     {
         if (rb != null)
         {
-            rb.velocity = transform.forward * speed;
+            rb.linearVelocity = transform.forward * speed;
         }
         Destroy(gameObject, lifetime);
     }

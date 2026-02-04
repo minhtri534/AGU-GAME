@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "AGU-GAME.sln"
+    "dotnet.defaultSolution": "AGU-GAME.slnx"
 }

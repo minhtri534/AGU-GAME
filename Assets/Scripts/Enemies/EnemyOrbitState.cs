@@ -20,7 +20,7 @@ public class EnemyOrbitState : IEnemyState
         Vector3 tangent =
             Vector3.Cross(Vector3.up, toPlayer.normalized) * enemy.orbitDir;
 
-        Vector3 move = tangent.normalized * enemy.orbitSpeed;
+        Vector3 move = tangent.normalized * enemy.statsData.orbitSpeed;
 
         float offset = toPlayer.magnitude - enemy.stoppingDistance;
         move += toPlayer.normalized * Mathf.Clamp(offset, -0.5f, 0.5f);

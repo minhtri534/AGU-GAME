@@ -15,14 +15,13 @@ public class EnemyChaseState : IEnemyState
         Vector3 toPlayer = enemy.player.position - enemy.transform.position;
         toPlayer.y = 0f;
 
-        float distance = toPlayer.magnitude;
-
-        if (distance > enemy.stoppingDistance)
+        if (toPlayer.magnitude > enemy.stoppingDistance)
         {
-            Vector3 move = toPlayer.normalized * enemy.moveSpeed;
+            Vector3 move = toPlayer.normalized * enemy.stats.Speed;
             enemy.rb.linearVelocity = new Vector3(move.x, 0, move.z);
         }
     }
+
 
     public void Exit(EnemyController enemy) { }
 }

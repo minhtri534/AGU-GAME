@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed = 3f;
-    public float stoppingDistance = 1.5f;
-    public float orbitSpeed = 2f;
-    public float retreatSpeed = 2f;
+    [Header("Stats")]
+    public EnemyStatsData statsData;
 
-    [Header("Timers")]
+    [Header("AI")]
+    public float stoppingDistance = 1.5f;
     public Vector2 chaseTimeRange;
     public Vector2 orbitTimeRange;
     public Vector2 retreatTimeRange;
@@ -17,6 +15,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public float stateTimer;
     [HideInInspector] public int orbitDir;
+    [HideInInspector] public RuntimeCharacterStats stats;
 
     private IEnemyState currentState;
 
@@ -29,6 +28,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        stats = new RuntimeCharacterStats(statsData);
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         ChangeState(new EnemyChaseState());
     }

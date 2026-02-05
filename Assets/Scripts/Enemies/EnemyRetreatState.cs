@@ -15,7 +15,7 @@ public class EnemyRetreatState : IEnemyState
         Vector3 toPlayer = enemy.player.position - enemy.transform.position;
         toPlayer.y = 0f;
 
-        Vector3 move = -toPlayer.normalized * enemy.retreatSpeed;
+        Vector3 move = -toPlayer.normalized * enemy.statsData.retreatSpeed;
         enemy.rb.linearVelocity = new Vector3(move.x, 0, move.z);
     }
 

@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float rotationSpeed = 10f;
-
     [Header("Stats")]
-    public PlayerStatsData statsData;   // KÉO ASSET VÀO INSPECTOR
+    public PlayerStatsData statsData;   // Kï¿½O ASSET Vï¿½O INSPECTOR
 
     private RuntimeCharacterStats stats;
     private IMovementInput input;
@@ -15,14 +13,13 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
         rb.freezeRotation = true;
         rb.useGravity = false;
 
         stats = new RuntimeCharacterStats(statsData);
 
         input = new KeyboardInput();
-        motor = new PlayerMotor(rb, stats.Speed, rotationSpeed);
+        motor = new PlayerMotor(rb, stats.Speed);
     }
 
     void FixedUpdate()

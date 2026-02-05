@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BillBoard : MonoBehaviour
@@ -8,10 +9,13 @@ public class BillBoard : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         transform.LookAt(mainCamera.transform);
-        transform.Rotate(0, 180, 0);
+        transform.Rotate(90, 0, 0); // rotation is off idk
+        // lock rotation on y axis
+        var rotation = transform.rotation.eulerAngles;
+        rotation.y = 0;
+        transform.rotation = Quaternion.Euler(rotation);
     }
 }

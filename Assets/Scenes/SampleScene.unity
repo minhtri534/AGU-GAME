@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7659f8a2d78214c43afd36fb74b50cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
-  Player: {fileID: 844050085}
+  Player: {fileID: 844050081}
   distance: 100
 --- !u!1 &410087039
 GameObject:
@@ -704,12 +704,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146418353889075615, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2146418353889075615, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
       propertyPath: m_AngularDamping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4171141877397683365, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
+      propertyPath: statsData
+      value: 
+      objectReference: {fileID: 11400000, guid: ca0d30c7fa2ce57498220d9a7cd0c074, type: 2}
     - target: {fileID: 6534897861612520243, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
       propertyPath: m_Name
       value: Player
@@ -758,7 +762,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4171141877397683365, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -783,19 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53a60beac4b66e34ba50ede5d6fdf2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  rotationSpeed: 10
   statsData: {fileID: 11400000, guid: ca0d30c7fa2ce57498220d9a7cd0c074, type: 2}
---- !u!114 &844050085 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4171141877397683365, guid: 89f0e69404403ca47901a75e7ee79494, type: 3}
-  m_PrefabInstance: {fileID: 844050079}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844050080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a60beac4b66e34ba50ede5d6fdf2eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!1 &1684000801
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,12 +18,14 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public RuntimeCharacterStats stats;
 
     private IEnemyState currentState;
+    public System.Action<EnemyController> OnEnemyDeath;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        rb.useGravity = false;
+        rb.useGravity = true;
     }
 
     void Start()
@@ -61,5 +63,11 @@ public class EnemyController : MonoBehaviour
             ChangeState(new EnemyOrbitState());
         else
             ChangeState(new EnemyRetreatState());
+    }
+
+    public void Die()
+    {
+        OnEnemyDeath?.Invoke(this); 
+        Destroy(gameObject);       
     }
 }

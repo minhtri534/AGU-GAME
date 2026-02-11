@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
             // 3. Nếu máu về 0 thì tiêu diệt Enemy
             if (enemy.stats.IsDead)
             {
-                Destroy(enemy.gameObject);
+                enemy.Die();
                 Debug.Log("Enemy Dead!");
             }
         }

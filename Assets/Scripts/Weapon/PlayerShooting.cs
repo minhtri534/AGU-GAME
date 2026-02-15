@@ -6,6 +6,12 @@ public class PlayerShooting : MonoBehaviour
     [Header("Settings")]
     public GameObject bulletPrefab; // Kéo Prefab viên đạn vào đây
     public Transform firePoint;     // Kéo GameObject vị trí đầu nòng súng vào đây
+    private PlayerController player;
+
+    void Awake()
+    {
+        player = GetComponent<PlayerController>();
+    }
 
     void Update()
     {
@@ -55,6 +61,14 @@ public class PlayerShooting : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction);
 
         // 4. Sinh ra viên đạn
-        Instantiate(bulletPrefab, firePoint.position, rotation);
+        GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, rotation);
+
+        Bullet bullet = bulletObj.GetComponent<Bullet>();
+
+        if (bullet != null)
+        {
+            float playerDamage = player.GetStats().Damage;
+            bullet.SetDamage(playerDamage);
+        }
     }
 }

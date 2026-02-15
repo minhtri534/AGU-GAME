@@ -5,7 +5,13 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 5f;
-    public float damage = 10f; // Sát thương của đạn
+    private float damage;
+
+    public void SetDamage(float newDamage)
+    {
+        damage = newDamage;
+    }
+
 
     void Start()
     {

@@ -1,25 +1,39 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
-    public PlayerStatsData statsData;   // K�O ASSET V�O INSPECTOR
+    public PlayerStatsData statsData;
 
     private RuntimeCharacterStats stats;
     private IMovementInput input;
     private PlayerMotor motor;
     private Rigidbody rb;
 
+    private IPlayerSkill skill;  
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        rb.useGravity = false;
+        rb.useGravity = true;   
 
         stats = new RuntimeCharacterStats(statsData);
 
         input = new KeyboardInput();
         motor = new PlayerMotor(rb, stats.Speed);
+
+        skill = GetComponent<IPlayerSkill>(); 
+    }
+
+    void Update()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            skill?.Activate();
+        }
     }
 
     void FixedUpdate()

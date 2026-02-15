@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public PlayerController Player;
+    private PlayerController player;
+
     public float distance = 100;
-    void Start()
-    {
-        transform.position = Player.transform.position + new Vector3(0, distance, -distance);
-        transform.rotation = Quaternion.Euler(45, 0, 0);
-    }
 
     void Update()
     {
-        var new_pos = Player.transform.position + new Vector3(0, distance, -distance);
+        if (player == null) return;
+
+        var new_pos = player.transform.position + new Vector3(0, distance, -distance);
         transform.position = Vector3.Lerp(transform.position, new_pos, Time.deltaTime * 10);
+    }
+
+
+    public void SetPlayer(PlayerController p)
+    {
+        player = p;
     }
 }

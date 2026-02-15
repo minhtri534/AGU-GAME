@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a97cbff584075f4f9a64ffac0f9b106, type: 3}
-  m_Name: PlayerStats
+  m_Name: Player_Healer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsData
-  maxHP: 100
-  maxMP: 50
+  maxHP: 200
+  maxMP: 100
   damage: 10
   speed: 5

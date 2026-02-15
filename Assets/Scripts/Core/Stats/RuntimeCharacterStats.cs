@@ -8,7 +8,7 @@ public class RuntimeCharacterStats : ICharacterStats
     public float MaxMP { get; }
     public float CurrentMP { get; private set; }
 
-    public float Damage { get; }
+    public float Damage { get; private set; }
     public float Speed { get; }
 
     public bool IsDead => CurrentHP <= 0;
@@ -32,5 +32,10 @@ public class RuntimeCharacterStats : ICharacterStats
     public void UseMP(float amount)
     {
         CurrentMP = Mathf.Max(0, CurrentMP - amount);
+    }
+
+    public void SetDamage(float newDamage)
+    {
+        Damage = newDamage;
     }
 }

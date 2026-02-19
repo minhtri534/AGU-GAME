@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
@@ -15,7 +17,11 @@ public class Projectile : MonoBehaviour
         damage = newDamage;
     }
     private BaseProjectileComponent defaultBehaviour;
-    private BaseProjectileComponent[] projectileComponents = {};
+    private List<BaseProjectileComponent> projectileComponents = new();
+    public void addProjectileComponent(BaseProjectileComponent c)
+    {
+        projectileComponents.Add(c);
+    }
 
     void Start()
     {
@@ -37,6 +43,10 @@ public class Projectile : MonoBehaviour
             }
         }
         OnShot();
+    }
+    void Update()
+    {
+        OnTraveling();
     }
 
     void OnCollisionEnter(Collision collision)

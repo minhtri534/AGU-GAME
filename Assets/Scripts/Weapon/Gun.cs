@@ -1,24 +1,31 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // BẮT BUỘC: Thêm dòng này để dùng hệ thống Input mới
 
-public class PlayerShooting : MonoBehaviour
+public class Gun : MonoBehaviour
 {
     [Header("Settings")]
     public GameObject bulletPrefab; // Kéo Prefab viên đạn vào đây
     public Transform firePoint;     // Kéo GameObject vị trí đầu nòng súng vào đây
+    private GunInput gunInput;
     private PlayerController player;
+    private
 
     void Awake()
     {
         player = GetComponent<PlayerController>();
+        gunInput = gameObject.AddComponent<GunInput>();
     }
 
     void Update()
     {
-        // SỬA LỖI: Dùng Mouse.current thay vì Input.GetMouseButtonDown
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        switch (gunInput.GetInput())
         {
-            Shoot();
+            case GunInputState.None:
+
+                break;
+            case GunInputState.JustPressed:
+                Shoot();
+                break;
         }
     }
 
@@ -69,6 +76,7 @@ public class PlayerShooting : MonoBehaviour
         {
             float playerDamage = player.GetStats().Damage;
             bullet.SetDamage(playerDamage);
+            bullet.addProjectileComponent(gameObject.AddComponent<ExampleProjectileBehaviour>());
         }
     }
 }

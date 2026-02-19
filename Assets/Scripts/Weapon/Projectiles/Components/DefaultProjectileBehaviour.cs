@@ -20,7 +20,7 @@ public class DefaultProjectileBehaviour : BaseProjectileComponent
             target.stats.TakeDamage(p.damage);
             Debug.Log("Hit Enemy! HP còn: " + target.stats.CurrentHP);
 
-            // 3. Nếu máu về 0 thì tiêu diệt Enemy
+            // update this code to be handled by the entity instead
             if (target.stats.IsDead)
             {
                 target.Die();

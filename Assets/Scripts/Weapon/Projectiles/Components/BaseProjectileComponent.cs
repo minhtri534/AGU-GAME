@@ -6,6 +6,11 @@ public abstract class BaseProjectileComponent : MonoBehaviour
     // Each function has a boolean return for overwriting default behaviour
     // If return true then the default behaviour (eg. destroying bullet on collision) will be ignored
 
+    // This class is meant to alter the projectile behaviour, for example
+    // A bounce bullet would override the OnHit() method
+    // An explosive bullet would override the OnBreak() method
+    // A split bullet that breaks into smaller bullets would override the OnTravelling method
+    // and so on
 
     // Called whenever the projectile has just been fired
     public virtual bool OnShot(Projectile p)

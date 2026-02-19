@@ -63,7 +63,7 @@ public class PlayerShooting : MonoBehaviour
         // 4. Sinh ra viên đạn
         GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, rotation);
 
-        Bullet bullet = bulletObj.GetComponent<Bullet>();
+        Projectile bullet = bulletObj.GetComponent<Projectile>();
 
         if (bullet != null)
         {

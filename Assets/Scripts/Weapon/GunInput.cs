@@ -27,3 +27,11 @@ public class GunInput : MonoBehaviour
         return GunInputState.None;
     }
 }
+
+public enum GunInputState
+{
+    None,
+    JustPressed,
+    Held,
+    JustReleased,
+}

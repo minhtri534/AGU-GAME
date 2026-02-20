@@ -7,8 +7,6 @@ public class DefaultProjectileBehaviour : BaseProjectileComponent
     public override bool OnShot(Projectile p)
     {
         p.rb.linearVelocity = p.transform.forward * p.speed; 
-
-        Destroy(p.gameObject, p.lifeTime);
         return false;
     }
     

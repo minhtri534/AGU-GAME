@@ -1,6 +1,5 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
@@ -76,6 +75,7 @@ public class Projectile : MonoBehaviour
     // Called whenever the projectile has just been fired
     private void OnShot()
     {
+        StartCoroutine(DestroyAfterLifeTime());
         var overrideDefault = false;
         foreach (var component in projectileComponents)
         {
@@ -146,5 +146,11 @@ public class Projectile : MonoBehaviour
     public void QueueOnBreak()
     {
         isOnBreakQueued = true;
+    }
+
+    private IEnumerator DestroyAfterLifeTime()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        QueueOnBreak();
     }
 }

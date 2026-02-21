@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem; // BẮT BUỘC: Thêm dòng này để dùng hệ thống Input mới
 
+/// <summary>
+/// The gun, meant to be used by players
+/// </summary>
 public class Gun : MonoBehaviour
 {
     [Header("Settings")]
@@ -10,8 +13,7 @@ public class Gun : MonoBehaviour
     private GunInput gunInput;
     private PlayerController player;
     public GunStats stats;
-    public StatsModifierComponent ModifierComponents;
-    public BaseGunComponent ProjectileTypeComponent;
+    public GunComponentInventory inventory;
     private bool canFire = true;
 
     void Awake()
@@ -19,25 +21,34 @@ public class Gun : MonoBehaviour
         player = GetComponent<PlayerController>();
         gunInput = gameObject.AddComponent<GunInput>();
         stats = new GunStats();
+        inventory = new GunComponentInventory(stats);
+        // Add example component to the gun
+        inventory.SwapBehaviourModifierComponent(0, new ExampleBehaviourComponent());
     }
 
     void Update()
     {
-
-        switch (gunInput.GetInput())
+        // Fallback if no type modifier component is equipped
+        if (inventory.GetTypeModifierComponent() == null)
         {
-            case GunInputState.None:
-                break;
-            case GunInputState.JustPressed:
+            if (gunInput.GetInput() == GunInputState.JustPressed)
+            {
                 Shoot(Aim());
-                break;
-            case GunInputState.Held:
-                break;
-            case GunInputState.JustReleased:
-
-                break;
+            }
         }
+        else
+        {
+            inventory.GetTypeModifierComponent().ManageGun(gunInput.GetInput(), this);
+        }
+
     }
+    /// <summary>
+    /// Returns the rotation to the mouse position
+    /// </summary>
+    /// <remarks>
+    /// TODO: create a child class for enemies that overrides this function to aim at players instead
+    /// </remarks>
+    /// <returns></returns>
     public Quaternion Aim()
     {
         if (Camera.main == null) return Quaternion.identity; // Kiểm tra camera
@@ -74,7 +85,11 @@ public class Gun : MonoBehaviour
 
         return Quaternion.LookRotation(direction);
     }
-    void Shoot(Quaternion rotation)
+    /// <summary>
+    /// Fires projectiles
+    /// </summary>
+    /// <param name="rotation"></param>
+    public void Shoot(Quaternion rotation)
     {
         if (bulletPrefab == null || firePoint == null) return;
 
@@ -104,7 +119,7 @@ public class Gun : MonoBehaviour
                 for (int i = 0; i < stats.GetNumberOfProjectiles(); i++)
                 {
                     var newRotation = Quaternion.AngleAxis(Random.Range(-stats.GetInaccuracy(), stats.GetInaccuracy()), Vector3.up) * rotation;
-                    
+
                     // create projectiles in coroutine to delay firing between each projectile
                     StartCoroutine(DelayRapidFire(newRotation, i * stats.GetReloadTime() / stats.GetNumberOfProjectiles() * 0.5f));
                 }
@@ -114,16 +129,24 @@ public class Gun : MonoBehaviour
     }
     private void CreateProjectile(Quaternion rotation)
     {
-        GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, rotation);
+        GameObject bulletObj = Instantiate(stats.ProjectilePrefab, firePoint.position, rotation);
 
         Projectile bullet = bulletObj.GetComponent<Projectile>();
 
         if (bullet != null)
         {
+            // update this part later to add all the projectile components
+            // and change the player influence to be a multiplier instead
             float playerDamage = player.GetStats().Damage;
             bullet.SetDamage(playerDamage);
+            // Add projectile components
+            inventory.GetTypeModifierComponent()?.AddComponentsToProjectile(bullet);
+            for (int i = 0; i < inventory.InventorySize; i++) 
+            {
+                inventory.GetBehaviourModifierComponent(i)?.AddComponentsToProjectile(bullet);
+            }
             // Add example bullet behaviour component for testing
-            bullet.addProjectileComponent(gameObject.AddComponent<ExampleProjectileBehaviour>());
+            //bullet.addProjectileComponent(gameObject.AddComponent<ExampleProjectileBehaviour>());
         }
     }
     private IEnumerator Reload()

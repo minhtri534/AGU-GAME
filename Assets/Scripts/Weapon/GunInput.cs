@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Handles user's input for the gun
+/// </summary>
 public class GunInput : MonoBehaviour
 {
     private InputAction shootAction;

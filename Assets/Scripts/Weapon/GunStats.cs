@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Stats for the gun to be used when creating a new projectile
+/// </summary>
 public class GunStats
 {
     public readonly float BaseDamage = 10;
@@ -9,7 +12,7 @@ public class GunStats
     public readonly float BaseInaccuracy = 10; // bullet fired will have an offset between -10 and 10 degrees
     public readonly int BaseNumberOfProjectiles = 1; // 1 bullet per shot
     public readonly ShotType BaseShotType = ShotType.Normal;
-    public readonly Object BaseProjectilePrefab = Resources.Load("Prefabs/Projectiles/Bullet.prefab");
+    public readonly GameObject BaseProjectilePrefab = Resources.Load<GameObject>("Prefabs/Projectiles/Bullet");
     // These stats are updated using base stats whenever a new component is added
     private float damage;
     private float projectileSpeed;
@@ -18,7 +21,7 @@ public class GunStats
     private float inaccuracy;
     private int numberOfProjectiles;
     public ShotType ShotType;
-    public Object ProjectilePrefab;
+    public GameObject ProjectilePrefab;
 
     public void SetDamage(float value)
     {
@@ -98,6 +101,17 @@ public class GunStats
     }
 
     public GunStats()
+    {
+        ResetStats();
+    }
+
+    /// <summary>
+    /// Reset all stats to the base stats
+    /// </summary>
+    /// <remarks>
+    /// Meant to be called whenever the gun component list is updated
+    /// </remarks>
+    public void ResetStats()
     {
         damage = BaseDamage;
         projectileSpeed = BaseProjectileSpeed;

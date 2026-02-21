@@ -1,3 +1,6 @@
+/// <summary>
+/// Base gun component class which contains metadata and gamplay data
+/// </summary>
 public abstract class BaseGunComponent
 {
     // Metadata

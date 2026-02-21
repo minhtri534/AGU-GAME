@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Projectile class for all projectiles
+/// </summary>
+
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
 public class Projectile : MonoBehaviour
 {
@@ -142,7 +146,12 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Make sure that OnHit() is only called once
+    /// <summary>
+    /// Called when the projectile breaks after collision
+    /// </summary>
+    /// <remarks>
+    /// Makes sure that OnHit() is only called once
+    /// </remarks>
     public void QueueOnBreak()
     {
         isOnBreakQueued = true;

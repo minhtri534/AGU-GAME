@@ -1,0 +1,22 @@
+using UnityEngine;
+
+/// <summary>
+/// Example class implementation of a gun component
+/// </summary>
+public class ExampleBehaviourComponent : BehaviourModifierComponent
+{
+    public override void ModifyStats(GunStats stats)
+    {
+        // Doubles the damage of the bullet
+        stats.SetDamage(stats.GetDamage() * 2);
+        // Increases the number of projectiles
+        stats.SetNumberOfProjectiles(stats.GetNumberOfProjectiles() + 2);
+        // Change shot type
+        stats.ShotType = ShotType.Multishot;
+    }
+
+    public override void AddComponentsToProjectile(Projectile p)
+    {
+        p.addProjectileComponent(new ExampleProjectileBehaviour());
+    }
+}

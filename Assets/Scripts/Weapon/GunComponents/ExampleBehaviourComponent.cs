@@ -11,12 +11,14 @@ public class ExampleBehaviourComponent : BehaviourModifierComponent
         stats.SetDamage(stats.GetDamage() * 2);
         // Increases the number of projectiles
         stats.SetNumberOfProjectiles(stats.GetNumberOfProjectiles() + 2);
+        // Increases inaccuracy
+        stats.SetInaccuary(stats.GetInaccuracy() * 2);
         // Change shot type
         stats.ShotType = ShotType.Multishot;
     }
 
     public override void AddComponentsToProjectile(Projectile p)
     {
-        p.addProjectileComponent(new ExampleProjectileBehaviour());
+        p.addProjectileComponent(p.gameObject.AddComponent<ExampleProjectileBehaviour>());
     }
 }

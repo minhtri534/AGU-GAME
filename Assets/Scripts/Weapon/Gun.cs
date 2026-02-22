@@ -137,8 +137,11 @@ public class Gun : MonoBehaviour
         {
             // update this part later to add all the projectile components
             // and change the player influence to be a multiplier instead
-            float playerDamage = player.GetStats().Damage;
-            bullet.SetDamage(playerDamage);
+            //float playerDamage = player.GetStats().Damage;
+            //bullet.SetDamage(playerDamage);
+            bullet.SetDamage(stats.GetDamage());
+            bullet.speed = stats.GetProjectileSpeed();
+            bullet.lifeTime = stats.GetProjectileLifeTime();
             // Add projectile components
             inventory.GetTypeModifierComponent()?.AddComponentsToProjectile(bullet);
             for (int i = 0; i < inventory.InventorySize; i++) 

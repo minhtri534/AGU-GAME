@@ -6,7 +6,7 @@ using UnityEngine;
 public class GunStats
 {
     public readonly float BaseDamage = 10;
-    public readonly float BaseProjectileSpeed = 20;
+    public readonly float BaseProjectileSpeed = 7;
     public readonly float BaseProjectileLifeTime = 5; // seconds
     public readonly float BaseReloadTime = 1; // 1 second before the next shot can be fired
     public readonly float BaseInaccuracy = 10; // bullet fired will have an offset between -10 and 10 degrees

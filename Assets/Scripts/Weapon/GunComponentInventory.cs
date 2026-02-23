@@ -67,12 +67,12 @@ public class GunComponentInventory
     {
         // reset stats to base stats
         stats.ResetStats();
-        // apply type component stats first
-        typeModifierComponent?.ModifyStats(stats);
         // update stats for all components in inventory
         foreach (BehaviourModifierComponent component in behaviourModifierComponents)
         {
             component?.ModifyStats(stats);
         }
+        // apply type component stats last
+        typeModifierComponent?.ModifyStats(stats);
     }
 }

@@ -22,8 +22,6 @@ public class Gun : MonoBehaviour
         gunInput = gameObject.AddComponent<GunInput>();
         stats = new GunStats();
         inventory = new GunComponentInventory(stats);
-        // Add example component to the gun
-        inventory.SwapBehaviourModifierComponent(0, new ExampleBehaviourComponent());
     }
 
     void Update()
@@ -148,8 +146,6 @@ public class Gun : MonoBehaviour
             {
                 inventory.GetBehaviourModifierComponent(i)?.AddComponentsToProjectile(bullet);
             }
-            // Add example bullet behaviour component for testing
-            //bullet.addProjectileComponent(gameObject.AddComponent<ExampleProjectileBehaviour>());
         }
     }
     private IEnumerator Reload()

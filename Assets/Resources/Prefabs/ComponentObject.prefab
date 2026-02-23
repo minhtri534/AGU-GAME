@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3288628737087385181, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e951d1242694c84683758b97a7f075c, type: 2}
     - target: {fileID: 3429095196522244638, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -54,10 +58,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7614643736489830127, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
       propertyPath: m_Name
-      value: BaseComponent
+      value: ComponentObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7614643736489830127, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1133734772604095423}
   m_SourcePrefab: {fileID: 100100000, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
+--- !u!1 &3051208211350336651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7614643736489830127, guid: 3eb54a44a354e7d43b800c3a8e253c6e, type: 3}
+  m_PrefabInstance: {fileID: 4896740530839065188}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1133734772604095423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3051208211350336651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8493524b73e27734b894a0e1b26a75c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunComponentWorldObject

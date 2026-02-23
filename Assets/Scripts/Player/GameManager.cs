@@ -33,5 +33,16 @@ public class GameManager : MonoBehaviour
 
         spawner.enabled = true;
         characterSelectPanel.SetActive(false);
+
+        // WARNING: TEST CODE ONLY
+        // THIS CODE SPAWNS AN EXAMPLE GUN COMPONENT IN THE WORLD WHEN THE GAME STARTS
+        // REMOVE AFTER TESTING!!!!!!!!!
+
+        // Get the inventory of the player and add it to the inventory manager
+        GunInventoryManager.SelectedInventory = playerObj.GetComponent<Gun>().inventory;
+        // Spawn an example gun component
+        GameObject testComponent = Instantiate(Resources.Load<GameObject>("Prefabs/ComponentObject"), new Vector3(0, 1, 0), Quaternion.identity);
+        GunComponentWorldObject c = testComponent.GetComponent<GunComponentWorldObject>();
+        c.SetGunComponent(new ExampleBehaviourComponent());
     }
 }

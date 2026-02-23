@@ -6,7 +6,7 @@ public abstract class BaseGunComponent
     // Metadata
     public string ComponentId = "DefaultComponent";
     public string Description = "DefaultComponent";
-    public string SpritePath = "";
+    public string SpritePath = "Sprites/tree"; // placeholder sprite for now, update this to an actual default sprite
     // Gameplay data
     public Rarity rarity = Rarity.Common;
 }

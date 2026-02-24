@@ -44,5 +44,12 @@ public class GameManager : MonoBehaviour
         GameObject testComponent = Instantiate(Resources.Load<GameObject>("Prefabs/ComponentObject"), new Vector3(0, 1, 0), Quaternion.identity);
         GunComponentWorldObject c = testComponent.GetComponent<GunComponentWorldObject>();
         c.SetGunComponent(new ExampleBehaviourComponent());
+
+        // Play music
+        var music = Resources.Load<AudioClip>("Audio/Music/Cat with a gun");
+        var source = gameObject.AddComponent<AudioSource>();
+        source.clip = music;
+        source.loop = true;
+        source.Play();
     }
 }

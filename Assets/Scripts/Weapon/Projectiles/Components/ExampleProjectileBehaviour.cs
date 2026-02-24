@@ -34,10 +34,10 @@ public class ExampleProjectileBehaviour : BaseProjectileComponent
         for (int i = 0;i < 6; i++)
         {
             var new_p = Instantiate(p);
-            // move the new bullet slightly so that it doesnt collide again immediately
-            new_p.transform.Translate(-p.transform.forward);
+            
             new_p.transform.Rotate(Vector3.up, 60 * i);
-             
+            // move the new bullet slightly so that it doesnt collide again immediately
+            new_p.transform.position += new_p.transform.forward;
         }
         return false;
     }

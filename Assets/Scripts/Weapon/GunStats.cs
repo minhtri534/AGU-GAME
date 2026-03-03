@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -11,8 +12,10 @@ public class GunStats
     public readonly float BaseReloadTime = 1; // 1 second before the next shot can be fired
     public readonly float BaseInaccuracy = 10; // bullet fired will have an offset between -10 and 10 degrees
     public readonly int BaseNumberOfProjectiles = 1; // 1 bullet per shot
+    public readonly float BaseProjectileSize = 1; // multiplied by 1
     public readonly ShotType BaseShotType = ShotType.Normal;
     public readonly GameObject BaseProjectilePrefab = Resources.Load<GameObject>("Prefabs/Projectiles/Bullet");
+    private readonly Dictionary<string, float> extraStats = new();
     // These stats are updated using base stats whenever a new component is added
     private float damage;
     private float projectileSpeed;
@@ -20,8 +23,10 @@ public class GunStats
     private float reloadTime;
     private float inaccuracy;
     private int numberOfProjectiles;
+    private float projectileSize;
     public ShotType ShotType;
     public GameObject ProjectilePrefab;
+    
 
     public void SetDamage(float value)
     {
@@ -99,7 +104,23 @@ public class GunStats
     {
         return numberOfProjectiles;
     }
+    public void SetProjectileSize(float value)
+    {
+        if (value < 0.1)
+        {
+            projectileSize = 0.1f;
+        }
+        projectileSize = value;
+    }
+    public float GetProjectileSize()
+    {
+        return reloadTime;
+    }
 
+    public float GetExtraStat(string stats)
+    {
+        return extraStats[stats];
+    }
     public GunStats()
     {
         ResetStats();

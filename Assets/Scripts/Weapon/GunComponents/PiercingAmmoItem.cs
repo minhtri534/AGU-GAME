@@ -4,8 +4,11 @@ public class PiercingAmmoItem : BehaviourModifierComponent
 {
     public override void ModifyStats(GunStats stats)
     {
-        stats.SetProjectilSpeed(stats.projectileSpeed * 0.8f);
-        stats.SetDamage(stats.damage * 1.2f);
+        float newSpeed = stats.GetProjectileSpeed() * 0.8f;
+        float newDamage = stats.GetDamage() * 1.2f;
+
+        stats.SetProjectileSpeed(newSpeed);
+        stats.SetDamage(newDamage);
     }
 
     public override void AddComponentsToProjectile(Projectile p)

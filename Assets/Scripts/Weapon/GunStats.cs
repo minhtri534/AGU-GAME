@@ -142,6 +142,7 @@ public class GunStats
         numberOfProjectiles = BaseNumberOfProjectiles;
         ShotType = BaseShotType;
         ProjectilePrefab = BaseProjectilePrefab;
+        projectileSize = BaseProjectileSize;
     }
 }
 

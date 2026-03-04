@@ -35,7 +35,7 @@ public class GunComponentWorldObject : MonoBehaviour
         // use the sprite path from the component to load the new sprite
         // change the texture of the material to the new sprite
         var renderer = gameObject.GetComponentInChildren<MeshRenderer>();
-        renderer.material.mainTexture = gunComponent.Sprite;
+        renderer.material.mainTexture = gunComponent.Sprite.texture;
     }
 
     // Create function to detect when the player is in the trigger

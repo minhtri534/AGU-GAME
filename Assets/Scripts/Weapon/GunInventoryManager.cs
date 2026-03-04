@@ -41,9 +41,9 @@ public class GunInventoryManager : MonoBehaviour
                 // Update texture of UI
                 for (int i = 0;i < 7;i++)
                 {
-                    Buttons[i].GetComponentInChildren<Image>().material.mainTexture = SelectedInventory.GetBehaviourModifierComponent(i).Sprite;
+                    Buttons[i].GetComponentInChildren<Image>().sprite = SelectedInventory.GetBehaviourModifierComponent(i).Sprite;
                 }
-                Buttons[7].GetComponentInChildren<Image>().material.mainTexture = SelectedInventory.GetTypeModifierComponent().Sprite;
+                Buttons[7].GetComponentInChildren<Image>().sprite = SelectedInventory.GetTypeModifierComponent().Sprite;
             } else
             {
                 if (selectedComponent != null)
@@ -58,7 +58,7 @@ public class GunInventoryManager : MonoBehaviour
         if (GunInventoryUI.enabled)
         {
             MouseSprite.transform.position = Mouse.current.position.ReadValue();
-            MouseSprite.GetComponent<Image>().material.mainTexture = selectedComponent.Sprite;
+            MouseSprite.GetComponent<Image>().sprite = selectedComponent.Sprite;
         }
         
     }

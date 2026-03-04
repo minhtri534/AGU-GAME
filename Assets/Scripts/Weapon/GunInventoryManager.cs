@@ -1,11 +1,17 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.UI;
 
 public class GunInventoryManager : MonoBehaviour
 {
     public static GunComponentWorldObject SelectedObject;
     public static GunComponentInventory SelectedInventory;
+    public Canvas GunInventoryUI;
+    public GameObject MouseSprite;
+    public GameObject[] Buttons = new GameObject[8];
+    private BaseGunComponent selectedComponent;
     private InputAction interactAction;
     void Start()
     {
@@ -22,12 +28,62 @@ public class GunInventoryManager : MonoBehaviour
             // If yes, swap the component in the slot with the SelectedObject
             // Add a "Drop Component" UI as well to simply drop the component to the ground
             // When dropped, instantiate new component world object and attach the gun component to it
-            BehaviourModifierComponent component = null;
-            if (SelectedObject != null)
+
+            // Toggles UI
+            GunInventoryUI.enabled = !GunInventoryUI.enabled;
+            // Get component
+            if (GunInventoryUI.enabled)
             {
-                component = (BehaviourModifierComponent)SelectedObject.GetGunComponent();
+                // Pick up component and remove the component just picked up form the ground
+                selectedComponent = (BaseGunComponent)SelectedObject.GetGunComponent();
+                Destroy(SelectedObject.gameObject);
+                SelectedObject = null;
+                // Update texture of UI
+                for (int i = 0;i < 7;i++)
+                {
+                    Buttons[i].GetComponentInChildren<Image>().sprite = SelectedInventory.GetBehaviourModifierComponent(i).Sprite;
+                }
+                Buttons[7].GetComponentInChildren<Image>().sprite = SelectedInventory.GetTypeModifierComponent().Sprite;
+            } else
+            {
+                if (selectedComponent != null)
+                {
+                    // get player position
+                    var pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+                    // spawn new component world object
+                    GunComponentWorldObjectInstancer.Spawn(selectedComponent, pos);
+                }
             }
-            SelectedInventory.SwapBehaviourModifierComponent(0, component);
         }
+        if (GunInventoryUI.enabled)
+        {
+            MouseSprite.transform.position = Mouse.current.position.ReadValue();
+            MouseSprite.GetComponent<Image>().sprite = selectedComponent.Sprite;
+        }
+        
+    }
+
+    public void OnComponentButtonPressed(int slot)
+    {
+        BehaviourModifierComponent component = (BehaviourModifierComponent)selectedComponent;
+
+        selectedComponent = SelectedInventory.SwapBehaviourModifierComponent(slot, component);
+        Debug.Log(selectedComponent);
+    }
+
+    public void OnTypeComponentButtonPressed()
+    {
+        TypeModifierComponent component = null;
+        if (SelectedObject != null)
+        {  
+            if (SelectedObject.IsTypeComponent())
+            {
+                component = (TypeModifierComponent)SelectedObject.GetGunComponent();
+            } else
+            {
+                return;
+            }
+        }
+        selectedComponent = SelectedInventory.SwapTypeModifierComponent(component);
     }
 }

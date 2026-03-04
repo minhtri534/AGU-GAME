@@ -15,7 +15,7 @@ public class ExampleBehaviourComponent : BehaviourModifierComponent
         stats.SetInaccuary(stats.GetInaccuracy() * 2);
         // Change shot type
         stats.ShotType = ShotType.Multishot;
-        stats.GetExtraStat("a"); // TEST CODE
+        //stats.GetExtraStat("a"); // TEST CODE
     }
 
     public override void AddComponentsToProjectile(Projectile p)

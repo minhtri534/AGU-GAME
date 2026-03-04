@@ -58,7 +58,7 @@ public class GunInventoryManager : MonoBehaviour
         if (GunInventoryUI.enabled)
         {
             MouseSprite.transform.position = Mouse.current.position.ReadValue();
-            MouseSprite.GetComponent<Image>().sprite = selectedComponent.Sprite;
+            MouseSprite.GetComponent<Image>().sprite = selectedComponent?.Sprite;
         }
         
     }

@@ -114,7 +114,7 @@ public class GunStats
     }
     public float GetProjectileSize()
     {
-        return reloadTime;
+        return projectileSize;
     }
 
     public float GetExtraStat(string stats)

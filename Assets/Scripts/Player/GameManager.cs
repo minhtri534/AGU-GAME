@@ -41,9 +41,7 @@ public class GameManager : MonoBehaviour
         // Get the inventory of the player and add it to the inventory manager
         GunInventoryManager.SelectedInventory = playerObj.GetComponent<Gun>().inventory;
         // Spawn an example gun component
-        GameObject testComponent = Instantiate(Resources.Load<GameObject>("Prefabs/ComponentObject"), new Vector3(0, 1, 0), Quaternion.identity);
-        GunComponentWorldObject c = testComponent.GetComponent<GunComponentWorldObject>();
-        c.SetGunComponent(new ExampleBehaviourComponent());
+        GunComponentWorldObjectInstancer.Spawn(new ExampleBehaviourComponent(), new Vector3(0, 1, 0));
 
         // Play music
         var music = Resources.Load<AudioClip>("Audio/Music/Cat with a gun");
@@ -51,5 +49,7 @@ public class GameManager : MonoBehaviour
         source.clip = music;
         source.loop = true;
         source.Play();
+        
+        // END OF TEST CODE
     }
 }

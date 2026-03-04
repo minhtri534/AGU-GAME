@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (player == null) return;
 
-        var new_pos = player.transform.position + new Vector3(0, distance, -distance);
+        var new_pos = player.transform.position + new Vector3(0, distance, distance * -0.75f);
         transform.position = Vector3.Lerp(transform.position, new_pos, Time.deltaTime * 10);
     }
 

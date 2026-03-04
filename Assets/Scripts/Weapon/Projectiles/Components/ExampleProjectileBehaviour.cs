@@ -14,7 +14,7 @@ public class ExampleProjectileBehaviour : BaseProjectileComponent
         var new_p = Instantiate(p);
 
         // get projectile direction and speed
-        speed = p.speed * 0.5f;
+        speed = p.Speed * 0.5f;
         directionOffset = p.transform.right * speed;
         
         return false;
@@ -24,7 +24,7 @@ public class ExampleProjectileBehaviour : BaseProjectileComponent
     public override bool OnTraveling(Projectile p)
     {
         directionOffset = Quaternion.Euler(0, Time.deltaTime * rotationSpeed, 0) * directionOffset;
-        p.rb.linearVelocity = directionOffset + p.speed * p.transform.forward;
+        p.rb.linearVelocity = directionOffset + p.Speed * p.transform.forward;
         return false;
     }
 

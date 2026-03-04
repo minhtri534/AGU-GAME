@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GunComponentWorldObject : MonoBehaviour
@@ -28,20 +29,13 @@ public class GunComponentWorldObject : MonoBehaviour
     {
         return gunComponent;
     }
-
-    public GunComponentWorldObject(BaseGunComponent c)
-    {
-        SetGunComponent(c);
-    }
-
     public void Start()
     {
         // get the gameobject
         // use the sprite path from the component to load the new sprite
         // change the texture of the material to the new sprite
-        var sprite = Resources.Load<Texture>(gunComponent.SpritePath);
         var renderer = gameObject.GetComponentInChildren<MeshRenderer>();
-        renderer.material.mainTexture = sprite;
+        renderer.material.mainTexture = gunComponent.Sprite;
     }
 
     // Create function to detect when the player is in the trigger

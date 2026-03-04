@@ -9,16 +9,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
 public class Projectile : MonoBehaviour
 {
-    public float speed = 20f;
-    public float lifeTime = 5f;
-    public float damage;
+    public float Speed;
+    public float LifeTime;
+    public float Size;
+    public float Damage;
     public Rigidbody rb;
     private bool isOnBreakQueued = false;
 
-    public void SetDamage(float newDamage)
-    {
-        damage = newDamage;
-    }
     private BaseProjectileComponent defaultBehaviour;
     private List<BaseProjectileComponent> projectileComponents = new();
     public void addProjectileComponent(BaseProjectileComponent c)
@@ -28,6 +25,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        gameObject.transform.localScale *= Size;
         rb = GetComponent<Rigidbody>();
         defaultBehaviour = gameObject.AddComponent<DefaultProjectileBehaviour>();
         
@@ -159,7 +157,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator DestroyAfterLifeTime()
     {
-        yield return new WaitForSeconds(lifeTime);
+        yield return new WaitForSeconds(LifeTime);
         QueueOnBreak();
     }
 }

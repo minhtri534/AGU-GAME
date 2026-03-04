@@ -30,7 +30,16 @@ public class HealerSkill : MonoBehaviour, IPlayerSkill
                 break;
 
             stats.UseMP(20f);
-            stats.TakeDamage(-20f); 
+
+            float healAmount = 20f;
+
+            float newHP = stats.CurrentHP + healAmount;
+
+            newHP = Mathf.Min(newHP, stats.MaxHP);
+
+            stats.SetCurrentHP(newHP);
+
+            Debug.Log($"[Healer] HP: {stats.CurrentHP}");
 
             yield return new WaitForSeconds(1f);
             timer += 1f;

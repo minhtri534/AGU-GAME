@@ -38,4 +38,9 @@ public class RuntimeCharacterStats : ICharacterStats
     {
         Damage = newDamage;
     }
+
+    public void SetCurrentHP(float value)
+    {
+        CurrentHP = Mathf.Clamp(value, 0, MaxHP);
+    }
 }

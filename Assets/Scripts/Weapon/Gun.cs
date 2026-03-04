@@ -16,6 +16,11 @@ public class Gun : MonoBehaviour
     public GunComponentInventory inventory;
     private bool canFire = true;
 
+    public GunStats GetStats()
+    {
+        return stats;
+    }
+
     void Awake()
     {
         player = GetComponent<PlayerController>();

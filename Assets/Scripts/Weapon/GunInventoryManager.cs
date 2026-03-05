@@ -23,67 +23,144 @@ public class GunInventoryManager : MonoBehaviour
     {
         if (interactAction.WasPressedThisFrame())
         {
-            // TODO: Open UI of the inventory
-            // When the player click on a slot, check if the type of component is correct for that slot
-            // If yes, swap the component in the slot with the SelectedObject
-            // Add a "Drop Component" UI as well to simply drop the component to the ground
-            // When dropped, instantiate new component world object and attach the gun component to it
-
             // Toggles UI
             GunInventoryUI.enabled = !GunInventoryUI.enabled;
             // Get component
             if (GunInventoryUI.enabled)
             {
-                // Pick up component and remove the component just picked up form the ground
-                selectedComponent = (BaseGunComponent)SelectedObject.GetGunComponent();
-                Destroy(SelectedObject.gameObject);
-                SelectedObject = null;
-                // Update texture of UI
-                for (int i = 0;i < 7;i++)
+                // Disable gameplay input
+                DisablePlayerInput(true);
+
+                // Pick up component and remove the component just picked up from the ground
+                if (SelectedObject != null)
                 {
-                    Buttons[i].GetComponentInChildren<Image>().sprite = SelectedInventory.GetBehaviourModifierComponent(i).Sprite;
+                    selectedComponent = SelectedObject.GetGunComponent();
+                    Destroy(SelectedObject.gameObject);
+                    SelectedObject = null;
                 }
-                Buttons[7].GetComponentInChildren<Image>().sprite = SelectedInventory.GetTypeModifierComponent().Sprite;
-            } else
+
+                // Update texture of UI when open inventory
+                UpdateUI();
+            }
+            else
             {
+                // Enable gameplay input
+                DisablePlayerInput(false);
                 if (selectedComponent != null)
                 {
                     // get player position
                     var pos = GameObject.FindGameObjectWithTag("Player").transform.position;
                     // spawn new component world object
                     GunComponentWorldObjectInstancer.Spawn(selectedComponent, pos);
+                    selectedComponent = null;
                 }
             }
         }
+        // Update the sprite of the selected component and make it follow the mouse
         if (GunInventoryUI.enabled)
         {
-            MouseSprite.transform.position = Mouse.current.position.ReadValue();
-            MouseSprite.GetComponent<Image>().sprite = selectedComponent?.Sprite;
+            var image = MouseSprite.GetComponent<Image>();
+            if (selectedComponent != null)
+            {
+                MouseSprite.transform.position = Mouse.current.position.ReadValue();
+                image.sprite = selectedComponent.Sprite;
+                image.enabled = true;
+            }
+            else
+            {
+                image.enabled = false; // hide image if there is no component
+            }
+
         }
-        
+
     }
 
     public void OnComponentButtonPressed(int slot)
     {
-        BehaviourModifierComponent component = (BehaviourModifierComponent)selectedComponent;
+        BehaviourModifierComponent component = null;
+        if (selectedComponent != null)
+        {
+            if (selectedComponent.IsTypeComponent())
+            {
+                return;
+            }
+            else
+            {
+                component = (BehaviourModifierComponent)selectedComponent;
+            }
+        }
 
+        // Swap components
         selectedComponent = SelectedInventory.SwapBehaviourModifierComponent(slot, component);
-        Debug.Log(selectedComponent);
+        // Update button ui
+        UpdateUI();
     }
 
     public void OnTypeComponentButtonPressed()
     {
         TypeModifierComponent component = null;
-        if (SelectedObject != null)
-        {  
-            if (SelectedObject.IsTypeComponent())
+        if (selectedComponent != null)
+        {
+            if (selectedComponent.IsTypeComponent())
             {
-                component = (TypeModifierComponent)SelectedObject.GetGunComponent();
-            } else
+                component = (TypeModifierComponent)selectedComponent;
+            }
+            else
             {
                 return;
             }
         }
+
+        // Swap component
         selectedComponent = SelectedInventory.SwapTypeModifierComponent(component);
+        // Update button ui
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        Sprite s;
+        Image image;
+        for (int i = 0; i < 7; i++)
+        {
+            s = SelectedInventory.GetBehaviourModifierComponent(i)?.Sprite;
+            image = Buttons[i].GetComponentsInChildren<Image>(true)[1];
+            if (s != null)
+            {
+                image.enabled = true;
+                image.sprite = s;
+            }
+            else
+            {
+                image.enabled = false; // hide image if there is no component
+            }
+        }
+        s = SelectedInventory.GetTypeModifierComponent()?.Sprite;
+        image = Buttons[7].GetComponentsInChildren<Image>(true)[1];
+        if (s != null)
+        {
+            image.enabled = true;
+            image.sprite = s;
+        }
+        else
+        {
+            image.enabled = false; // hide image if there is no component
+        }
+    }
+
+    private void DisablePlayerInput(bool disabled)
+    {
+        if (disabled)
+        {
+            InputSystem.actions.FindAction("Player/Shoot").Disable();
+            InputSystem.actions.FindAction("Player/Move").Disable();
+            InputSystem.actions.FindAction("Player/Ability").Disable();
+        }
+        else
+        {
+            InputSystem.actions.FindAction("Player/Shoot").Enable();
+            InputSystem.actions.FindAction("Player/Move").Enable();
+            InputSystem.actions.FindAction("Player/Ability").Enable();
+        }
     }
 }

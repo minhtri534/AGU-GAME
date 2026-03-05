@@ -3,6 +3,11 @@ using UnityEngine;
 // Component type that changes the projectile type
 public abstract class TypeModifierComponent : BehaviourModifierComponent
 {
+    public TypeModifierComponent() : base()
+    {
+        isTypeComponent = true;
+    }
+
     /// <summary>
     /// Called every frame by the gun.
     /// Essentially overrides the gun's behaviour

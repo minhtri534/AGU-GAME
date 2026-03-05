@@ -15,6 +15,8 @@ public class ExampleBehaviourComponent : BehaviourModifierComponent
         stats.SetInaccuary(stats.GetInaccuracy() * 2);
         // Change shot type
         stats.ShotType = ShotType.Multishot;
+        stats.SetProjectileLifeTime(100);
+        stats.SetReloadTime(0.2f);
         //stats.GetExtraStat("a"); // TEST CODE
     }
 

@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class GunComponentWorldObject : MonoBehaviour
 {
-    private bool isTypeComponent;
+    //private bool isTypeComponent;
     private BaseGunComponent gunComponent;
 
-    public bool IsTypeComponent()
-    {
-        return isTypeComponent;
-    }
+    //public bool IsTypeComponent()
+    //{
+    //    return isTypeComponent;
+    //}
 
     public void SetGunComponent(BaseGunComponent c)
     {
         gunComponent = c;
-        if (c.GetType() == typeof(TypeModifierComponent))
-        {
-            isTypeComponent = true;
-        }
-        else
-        {
-            isTypeComponent = false;
-        }
+        //if (c.GetType() == typeof(TypeModifierComponent))
+        //{
+        //    isTypeComponent = true;
+        //}
+        //else
+        //{
+        //    isTypeComponent = false;
+        //}
     }
 
     public BaseGunComponent GetGunComponent()
@@ -35,7 +35,8 @@ public class GunComponentWorldObject : MonoBehaviour
         // use the sprite path from the component to load the new sprite
         // change the texture of the material to the new sprite
         var renderer = gameObject.GetComponentInChildren<MeshRenderer>();
-        renderer.material.mainTexture = gunComponent.Sprite;
+        Debug.Log(gunComponent.Sprite);
+        renderer.material.mainTexture = gunComponent.Sprite.texture;
     }
 
     // Create function to detect when the player is in the trigger
@@ -48,7 +49,6 @@ public class GunComponentWorldObject : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             GunInventoryManager.SelectedObject = this;
-            Debug.Log("Component detected!");
         }
     }
 
@@ -59,7 +59,6 @@ public class GunComponentWorldObject : MonoBehaviour
             if (GunInventoryManager.SelectedObject == this)
             {
                 GunInventoryManager.SelectedObject = null;
-                Debug.Log("Component undetected!");
             }
         }
     }

@@ -114,12 +114,26 @@ public class GunStats
     }
     public float GetProjectileSize()
     {
-        return reloadTime;
+        return projectileSize;
     }
 
     public float GetExtraStat(string stats)
     {
+        if (!extraStats.ContainsKey(stats))
+        {
+            return 0;
+        }
         return extraStats[stats];
+    }
+    public void SetExtraStat(string stats, float value)
+    {
+        if (!extraStats.ContainsKey(stats))
+        {
+            extraStats.Add(stats, value);
+        } else
+        {
+            extraStats[stats] = value;
+        }
     }
     public GunStats()
     {
@@ -142,6 +156,8 @@ public class GunStats
         numberOfProjectiles = BaseNumberOfProjectiles;
         ShotType = BaseShotType;
         ProjectilePrefab = BaseProjectilePrefab;
+        projectileSize = BaseProjectileSize;
+        extraStats.Clear();
     }
 }
 

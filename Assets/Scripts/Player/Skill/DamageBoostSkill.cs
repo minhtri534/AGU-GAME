@@ -3,12 +3,14 @@ using System.Collections;
 
 public class BerserkerSkill : MonoBehaviour, IPlayerSkill
 {
-    private RuntimeCharacterStats stats;
+    private Gun gun;
+    private GunStats gunStats;
     private bool isActive = false;
 
     void Awake()
     {
-        stats = GetComponent<PlayerController>().GetStats();
+        gun = GetComponentInChildren<Gun>();  
+        gunStats = gun.GetStats();           
     }
 
     public void Activate()
@@ -23,19 +25,20 @@ public class BerserkerSkill : MonoBehaviour, IPlayerSkill
 
         float bonusDamage = 30f;
 
-        Debug.Log($"[Berserker] Damage BEFORE: {stats.Damage}");
+        float originalDamage = gunStats.GetDamage();
 
-        stats.SetDamage(stats.Damage + bonusDamage);
+        Debug.Log($"[Berserker] Gun Damage BEFORE: {originalDamage}");
 
-        Debug.Log($"[Berserker] Damage AFTER BUFF: {stats.Damage}");
+        gunStats.SetDamage(originalDamage + bonusDamage);
+
+        Debug.Log($"[Berserker] Gun Damage AFTER BUFF: {gunStats.GetDamage()}");
 
         yield return new WaitForSeconds(5f);
 
-        stats.SetDamage(stats.Damage - bonusDamage);
+        gunStats.SetDamage(originalDamage);
 
-        Debug.Log($"[Berserker] Damage AFTER END: {stats.Damage}");
+        Debug.Log($"[Berserker] Gun Damage AFTER END: {gunStats.GetDamage()}");
 
         isActive = false;
     }
-
 }

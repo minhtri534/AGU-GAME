@@ -25,7 +25,6 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        gameObject.transform.localScale *= Size;
         rb = GetComponent<Rigidbody>();
         defaultBehaviour = gameObject.AddComponent<DefaultProjectileBehaviour>();
         
@@ -77,6 +76,7 @@ public class Projectile : MonoBehaviour
     // Called whenever the projectile has just been fired
     private void OnShot()
     {
+        gameObject.transform.localScale *= Size;
         StartCoroutine(DestroyAfterLifeTime());
         var overrideDefault = false;
         foreach (var component in projectileComponents)

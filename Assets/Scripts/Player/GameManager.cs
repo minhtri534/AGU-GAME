@@ -42,7 +42,11 @@ public class GameManager : MonoBehaviour
         GunInventoryManager.SelectedInventory = playerObj.GetComponent<Gun>().inventory;
         // Spawn an example gun component
         GunComponentWorldObjectInstancer.Spawn(new ExampleBehaviourComponent(), new Vector3(0, 1, 0));
-        GunComponentWorldObjectInstancer.Spawn(new PiercingAmmoItem(), new Vector3(3, 1, 0));
+        GunComponentWorldObjectInstancer.Spawn(new GhostAmmoItem(), new Vector3(3, 1, 0));
+        GunComponentWorldObjectInstancer.Spawn(new HomingAmmoItem(), new Vector3(4, 1, 0));
+        var component = GunComponentRepository.GetRandomGunComponent();
+        Debug.Log(component.GetType().Name);
+        GunComponentWorldObjectInstancer.Spawn(component, new Vector3(0, 1, 3));
 
         // Play music
         var music = Resources.Load<AudioClip>("Audio/Music/Cat with a gun");

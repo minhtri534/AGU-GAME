@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PiercingAmmoItem : BehaviourModifierComponent
 {
-    protected override string SpritePath { get {return "Sprites/rat";}}
     public override void ModifyStats(GunStats stats)
     {
         float newSpeed = stats.GetProjectileSpeed() * 0.8f;

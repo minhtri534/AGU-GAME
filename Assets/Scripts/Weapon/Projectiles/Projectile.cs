@@ -64,6 +64,21 @@ public class Projectile : MonoBehaviour
         OnHit(enemy);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        // 1. Kiểm tra xem đạn có trúng Enemy không
+        // Thử tìm component EnemyController trên vật thể bị bắn trúng
+        EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
+        
+        // Nếu không thấy, thử tìm ở object cha (đôi khi collider nằm ở con, script nằm ở cha)
+        if (enemy == null)
+        {
+            enemy = other.gameObject.GetComponentInParent<EnemyController>();
+        }
+
+        OnHit(enemy);
+    }
+
 
     void LateUpdate()
     {

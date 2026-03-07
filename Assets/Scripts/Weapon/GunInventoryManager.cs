@@ -63,7 +63,7 @@ public class GunInventoryManager : MonoBehaviour
             if (selectedComponent != null)
             {
                 MouseSprite.transform.position = Mouse.current.position.ReadValue();
-                image.sprite = selectedComponent.Sprite;
+                image.sprite = selectedComponent.Data.Sprite;
                 image.enabled = true;
             }
             else
@@ -123,7 +123,7 @@ public class GunInventoryManager : MonoBehaviour
         Image image;
         for (int i = 0; i < 7; i++)
         {
-            s = SelectedInventory.GetBehaviourModifierComponent(i)?.Sprite;
+            s = SelectedInventory.GetBehaviourModifierComponent(i)?.Data.Sprite;
             image = Buttons[i].GetComponentsInChildren<Image>(true)[1];
             if (s != null)
             {
@@ -135,7 +135,7 @@ public class GunInventoryManager : MonoBehaviour
                 image.enabled = false; // hide image if there is no component
             }
         }
-        s = SelectedInventory.GetTypeModifierComponent()?.Sprite;
+        s = SelectedInventory.GetTypeModifierComponent()?.Data.Sprite;
         image = Buttons[7].GetComponentsInChildren<Image>(true)[1];
         if (s != null)
         {

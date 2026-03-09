@@ -1,5 +1,7 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
@@ -9,13 +11,28 @@ public class GunInventoryManager : MonoBehaviour
     public static GunComponentWorldObject SelectedObject;
     public static GunComponentInventory SelectedInventory;
     public Canvas GunInventoryUI;
-    public GameObject MouseSprite;
-    public GameObject[] Buttons = new GameObject[8];
+    public Image MouseSprite;
+    public Button[] Buttons = new Button[8];
+    public TextMeshProUGUI EquippedText;
+    public TextMeshProUGUI HoldingText;
     private BaseGunComponent selectedComponent;
     private InputAction interactAction;
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Player/Interact");
+
+        // Add listeners to buttons and such
+        for (int i = 0; i < 7; i++)
+        {
+            int amogus = i; // stupid code thing needs stupid fix
+            Buttons[i].onClick.AddListener(() => OnComponentButtonPressed(amogus));
+            Buttons[i].gameObject.GetComponent<PointerEvent>().onPointerEnter.AddListener(() => OnButtonEntered(amogus));
+            Buttons[i].gameObject.GetComponent<PointerEvent>().onPointerExit.AddListener(() => OnButtonExited(amogus));
+        }
+        Buttons[7].onClick.AddListener(() => OnTypeComponentButtonPressed());
+        Buttons[7].gameObject.GetComponent<PointerEvent>().onPointerEnter.AddListener(() => OnButtonEntered(7));
+        Buttons[7].gameObject.GetComponent<PointerEvent>().onPointerExit.AddListener(() => OnButtonExited(7));
+
         // TODO: Find and add the gun inventory of the player automatically
     }
 
@@ -60,6 +77,7 @@ public class GunInventoryManager : MonoBehaviour
         if (GunInventoryUI.enabled)
         {
             var image = MouseSprite.GetComponent<Image>();
+            HoldingText.text = ParseComponentData(selectedComponent);
             if (selectedComponent != null)
             {
                 MouseSprite.transform.position = Mouse.current.position.ReadValue();
@@ -117,6 +135,7 @@ public class GunInventoryManager : MonoBehaviour
         UpdateUI();
     }
 
+    // Update whenever a component is equipped/unequipped
     private void UpdateUI()
     {
         Sprite s;
@@ -162,5 +181,37 @@ public class GunInventoryManager : MonoBehaviour
             InputSystem.actions.FindAction("Player/Move").Enable();
             InputSystem.actions.FindAction("Player/Ability").Enable();
         }
+    }
+
+    private string ParseComponentData(BaseGunComponent component)
+    {
+        string text = "";
+        var data = component?.Data;
+        if (data != null)
+        {
+            text = @$"{data.ComponentName}
+    {data.Rarity}\n
+{data.Description}
+                ";
+        }
+        return text;
+    }
+
+    private void OnButtonEntered(int slot)
+    {
+        BaseGunComponent component;
+        if (slot != 7)
+        {
+            component = SelectedInventory.GetBehaviourModifierComponent(slot);
+        } else
+        {
+            component = SelectedInventory.GetTypeModifierComponent();
+        }
+        EquippedText.text = ParseComponentData(component);
+    }
+
+    private void OnButtonExited(int slot)
+    {
+        EquippedText.text = "";
     }
 }

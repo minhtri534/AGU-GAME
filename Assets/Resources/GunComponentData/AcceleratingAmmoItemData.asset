@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f377c50e16eb36c4c8b4f2d1f57896e5, type: 3}
   m_Name: AcceleratingAmmoItemData
   m_EditorClassIdentifier: Assembly-CSharp::GunComponentStatsData
+  ComponentClass: AcceleratingAmmoItem
   ComponentName: Accelertating Ammo
   Description: Makes your projectiles accelerate idk
-  SpritePath: Sprites/rat
+  Sprite: {fileID: 21300000, guid: 6f5fcb5864213214ba42d8dc0df89b84, type: 3}
   Rarity: 0

@@ -17,12 +17,11 @@ public static class GunComponentRepository
     // All components must be manually registered in a GunComponentData asset
     private static void LoadRepository()
     {
-        var data = Resources.LoadAll<GunComponentData>("GunComponentData/");
+        var data = Resources.LoadAll<GunComponentData>("GunComponentData");
         foreach (var d in data)
         {
             repository.Add(d.ComponentClass, d);
         }
-        
     }
 
     public static GunComponentData GetGunComponentData(string component)
@@ -38,12 +37,16 @@ public static class GunComponentRepository
             Debug.LogError(component + " does not exist");
             return null;
         }
-        return (BaseGunComponent)Activator.CreateInstance(t);
+        var c = (BaseGunComponent)Activator.CreateInstance(t);
+        // Inject the data from the repo back into the object
+        c.Data = GetGunComponentData(component);
+        return c;
     }
 
     public static T CreateGunComponent<T>() where T : BaseGunComponent
     {
         var component = (T)Activator.CreateInstance(typeof(T));
+        // Inject the data from the repo back into the object
         component.Data = repository[typeof(T).Name];
         return component;
     }

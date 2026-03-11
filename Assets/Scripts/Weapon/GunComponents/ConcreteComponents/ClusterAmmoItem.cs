@@ -6,6 +6,7 @@ public class ClusterAmmoItem : BehaviourModifierComponent
     {
         stats.SetDamage(stats.GetDamage() * 0.9f);
         stats.SetReloadTime(stats.GetReloadTime() * 1.1f);
+        stats.SetProjectileSpeed(stats.GetProjectileSpeed() * 0.8f);
     }
 
     public override void AddComponentsToProjectile(Projectile p)

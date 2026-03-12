@@ -1,3 +1,5 @@
+using System.IO;
+
 public class RandomWeight
 {
     public static int Random(int[] weights)
@@ -7,7 +9,7 @@ public class RandomWeight
         {
             sumOfWeights += i;
         }
-        int randomNumber = UnityEngine.Random.Range(0, sumOfWeights + 1);
+        int randomNumber = UnityEngine.Random.Range(1, sumOfWeights + 1);
         int currentWeight = 0;
         for (int i = 0; i < weights.Length; i++)
         {
@@ -17,6 +19,6 @@ public class RandomWeight
                 return i;
             }
         }
-        return -1;
+        throw new InvalidDataException("Yo bro what did you do");
     }
 }

@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         var component = GunComponentRepository.GetRandomGunComponent();
         Debug.Log(component.GetType().Name);
         GunComponentWorldObjectInstancer.Spawn(component, new Vector3(0, 1, 3));
+        // Spawn chest
+        LootChestInstancer.Spawn(Resources.Load<LootData>("LootData/CommonChest"), new Vector3(-5, 1, -5));
 
         // Play music
         var music = Resources.Load<AudioClip>("Audio/Music/Cat with a gun");

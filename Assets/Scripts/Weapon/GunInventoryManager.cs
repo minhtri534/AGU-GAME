@@ -1,9 +1,6 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class GunInventoryManager : MonoBehaviour
@@ -17,9 +14,11 @@ public class GunInventoryManager : MonoBehaviour
     public TextMeshProUGUI HoldingText;
     private BaseGunComponent selectedComponent;
     private InputAction interactAction;
+    private InputAction inventoryAction;
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Player/Interact");
+        inventoryAction = InputSystem.actions.FindAction("Player/Inventory");
 
         // Add listeners to buttons and such
         for (int i = 0; i < 7; i++)
@@ -38,39 +37,19 @@ public class GunInventoryManager : MonoBehaviour
 
     void Update()
     {
-        if (interactAction.WasPressedThisFrame())
+        if (inventoryAction.WasPressedThisFrame())
         {
-            // Toggles UI
-            GunInventoryUI.enabled = !GunInventoryUI.enabled;
-            // Get component
-            if (GunInventoryUI.enabled)
+            ToggleInventory();
+        }
+        else if (interactAction.WasPressedThisFrame())
+        {
+            // Pick up component and remove the component just picked up from the ground
+            if (SelectedObject != null)
             {
-                // Disable gameplay input
-                DisablePlayerInput(true);
-
-                // Pick up component and remove the component just picked up from the ground
-                if (SelectedObject != null)
-                {
-                    selectedComponent = SelectedObject.GetGunComponent();
-                    Destroy(SelectedObject.gameObject);
-                    SelectedObject = null;
-                }
-
-                // Update texture of UI when open inventory
-                UpdateUI();
-            }
-            else
-            {
-                // Enable gameplay input
-                DisablePlayerInput(false);
-                if (selectedComponent != null)
-                {
-                    // get player position
-                    var pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-                    // spawn new component world object
-                    GunComponentWorldObjectInstancer.Spawn(selectedComponent, pos);
-                    selectedComponent = null;
-                }
+                selectedComponent = SelectedObject.GetGunComponent();
+                Destroy(SelectedObject.gameObject);
+                SelectedObject = null;
+                ToggleInventory();
             }
         }
         // Update the sprite of the selected component and make it follow the mouse
@@ -88,9 +67,35 @@ public class GunInventoryManager : MonoBehaviour
             {
                 image.enabled = false; // hide image if there is no component
             }
-
         }
+    }
 
+    private void ToggleInventory()
+    {
+        // Toggles UI
+        GunInventoryUI.enabled = !GunInventoryUI.enabled;
+        // Get component
+        if (GunInventoryUI.enabled)
+        {
+            // Disable gameplay input
+            DisablePlayerInput(true);
+
+            // Update texture of UI when open inventory
+            UpdateUI();
+        }
+        else
+        {
+            // Enable gameplay input
+            DisablePlayerInput(false);
+            if (selectedComponent != null)
+            {
+                // get player position
+                var pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+                // spawn new component world object
+                GunComponentWorldObjectInstancer.Spawn(selectedComponent, pos);
+                selectedComponent = null;
+            }
+        }
     }
 
     public void OnComponentButtonPressed(int slot)
@@ -174,12 +179,14 @@ public class GunInventoryManager : MonoBehaviour
             InputSystem.actions.FindAction("Player/Shoot").Disable();
             InputSystem.actions.FindAction("Player/Move").Disable();
             InputSystem.actions.FindAction("Player/Ability").Disable();
+            InputSystem.actions.FindAction("Player/Interact").Disable();
         }
         else
         {
             InputSystem.actions.FindAction("Player/Shoot").Enable();
             InputSystem.actions.FindAction("Player/Move").Enable();
             InputSystem.actions.FindAction("Player/Ability").Enable();
+            InputSystem.actions.FindAction("Player/Interact").Enable();
         }
     }
 
@@ -203,7 +210,8 @@ public class GunInventoryManager : MonoBehaviour
         if (slot != 7)
         {
             component = SelectedInventory.GetBehaviourModifierComponent(slot);
-        } else
+        }
+        else
         {
             component = SelectedInventory.GetTypeModifierComponent();
         }

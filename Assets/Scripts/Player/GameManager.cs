@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         var source = gameObject.AddComponent<AudioSource>();
         source.clip = music;
         source.loop = true;
+        source.volume *= 0.5f;
         source.Play();
         
         // END OF TEST CODE

@@ -31,6 +31,7 @@ public class GunInventoryManager : MonoBehaviour
         Buttons[7].onClick.AddListener(() => OnTypeComponentButtonPressed());
         Buttons[7].gameObject.GetComponent<PointerEvent>().onPointerEnter.AddListener(() => OnButtonEntered(7));
         Buttons[7].gameObject.GetComponent<PointerEvent>().onPointerExit.AddListener(() => OnButtonExited(7));
+        GunInventoryUI.GetComponent<Button>().onClick.AddListener(ToggleInventory);
 
         // TODO: Find and add the gun inventory of the player automatically
     }

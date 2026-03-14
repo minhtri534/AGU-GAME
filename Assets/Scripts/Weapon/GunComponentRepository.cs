@@ -63,7 +63,8 @@ public static class GunComponentRepository
         }
         else
         {
-            randomID = repository.Keys.ToArray()[UnityEngine.Random.Range(0, repository.Count)];
+            var tempRepo = repository.Keys.ToArray();
+            randomID = tempRepo[UnityEngine.Random.Range(0, tempRepo.Length)];
         }
         return CreateGunComponent(randomID);
     }
@@ -78,7 +79,8 @@ public static class GunComponentRepository
         }
         else
         {
-            randomID = repository.Values.Where(a => a.Rarity == rarity).ToArray()[UnityEngine.Random.Range(0, repository.Count)].ComponentClass;
+            var tempRepo = repository.Values.Where(a => a.Rarity == rarity).ToArray();
+            randomID = tempRepo[UnityEngine.Random.Range(0, tempRepo.Length)].ComponentClass;
         }
 
         return CreateGunComponent(randomID);

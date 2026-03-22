@@ -103,11 +103,12 @@ public class Gun : MonoBehaviour
         if (isEnemyWeapon)
         {
             bulletObj.GetComponent<Collider>().excludeLayers += LayerMask.GetMask("Enemy");
-        } else
+        }
+        else
         {
             bulletObj.GetComponent<Collider>().excludeLayers += LayerMask.GetMask("Player");
         }
-        
+
 
         Projectile bullet = bulletObj.GetComponent<Projectile>();
 

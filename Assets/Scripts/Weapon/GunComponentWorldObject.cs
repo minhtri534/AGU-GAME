@@ -45,6 +45,7 @@ public class GunComponentWorldObject : MonoBehaviour
     // Remember to destroy self after equipping
     void OnTriggerEnter(Collider other)
     {
+        // TODO: replace tag with specific individual players instead for multiplayer
         if (other.gameObject.CompareTag("Player"))
         {
             GunInventoryManager.SelectedObject = this;
@@ -53,6 +54,7 @@ public class GunComponentWorldObject : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        // TODO: replace tag with specific individual players instead for multiplayer
         if (other.gameObject.CompareTag("Player"))
         {
             if (GunInventoryManager.SelectedObject == this)

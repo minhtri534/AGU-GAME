@@ -91,6 +91,7 @@ public class GunInventoryManager : MonoBehaviour
             if (selectedComponent != null)
             {
                 // get player position
+                // TODO: replace tag with specific individual players instead for multiplayer
                 var pos = GameObject.FindGameObjectWithTag("Player").transform.position;
                 // spawn new component world object
                 GunComponentWorldObjectInstancer.Spawn(selectedComponent, pos);

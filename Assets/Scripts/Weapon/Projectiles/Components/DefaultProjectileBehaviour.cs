@@ -11,12 +11,12 @@ public class DefaultProjectileBehaviour : BaseProjectileComponent
     }
     
     // Deals damage on hit
-    public override bool OnHit(Projectile p, CharacterController target) // update this to include the player as well
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         if (target != null && target.stats != null)
         {
             target.stats.TakeDamage(p.Damage);
-            Debug.Log("Hit Enemy! HP còn: " + target.stats.CurrentHP);
+            Debug.Log("Hit " + target + "! HP còn: " + target.stats.CurrentHP);
         }
         p.QueueOnBreak(); // Break after hit
         return false;

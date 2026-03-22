@@ -69,6 +69,15 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
             EnemyController controller = enemy.GetComponent<EnemyController>();
+            // WARNING: TEST CODE
+            // REMOVE AFTER TESTING
+
+            enemy.AddComponent<Gun>();
+            enemy.GetComponent<Gun>().isEnemyWeapon = true;
+            enemy.GetComponent<Gun>().firePoint = enemy.transform;
+            
+            // END OF TEST CODE
+
             controller.OnEnemyDeath += HandleEnemyDeath;
         }
     }

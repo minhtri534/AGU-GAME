@@ -31,17 +31,6 @@ public class Projectile : MonoBehaviour
         // Cấu hình vật lý cho đạn
         rb.useGravity = false; 
         
-        // Bỏ qua va chạm với Player (để không bị kẹt khi mới bắn ra)
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            Collider playerCollider = player.GetComponent<Collider>();
-            Collider myCollider = GetComponent<Collider>();
-            if (playerCollider != null && myCollider != null)
-            {
-                Physics.IgnoreCollision(playerCollider, myCollider);
-            }
-        }
         OnShot();
     }
     void Update()
@@ -49,31 +38,31 @@ public class Projectile : MonoBehaviour
         OnTraveling();
     }
 
-    void OnCollisionEnter(Collision collision)
+    /*void OnCollisionEnter(Collision collision)
     {
         // 1. Kiểm tra xem đạn có trúng Enemy không
         // Thử tìm component EnemyController trên vật thể bị bắn trúng
-        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+        CharacterController enemy = collision.gameObject.GetComponent<CharacterController>();
         
         // Nếu không thấy, thử tìm ở object cha (đôi khi collider nằm ở con, script nằm ở cha)
         if (enemy == null)
         {
-            enemy = collision.gameObject.GetComponentInParent<EnemyController>();
+            enemy = collision.gameObject.GetComponentInParent<CharacterController>();
         }
 
         OnHit(enemy);
-    }
+    }*/
 
     void OnTriggerEnter(Collider other)
     {
         // 1. Kiểm tra xem đạn có trúng Enemy không
         // Thử tìm component EnemyController trên vật thể bị bắn trúng
-        EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
+        CharacterController enemy = other.gameObject.GetComponent<CharacterController>();
         
         // Nếu không thấy, thử tìm ở object cha (đôi khi collider nằm ở con, script nằm ở cha)
         if (enemy == null)
         {
-            enemy = other.gameObject.GetComponentInParent<EnemyController>();
+            enemy = other.gameObject.GetComponentInParent<CharacterController>();
         }
 
         OnHit(enemy);
@@ -125,7 +114,7 @@ public class Projectile : MonoBehaviour
     }
 
     // Called when the projectile collides
-    private void OnHit(EnemyController target) // update this to include the player as well
+    private void OnHit(CharacterController target) // update this to include the player as well
     {
         var overrideDefault = false;
         foreach (var component in projectileComponents)

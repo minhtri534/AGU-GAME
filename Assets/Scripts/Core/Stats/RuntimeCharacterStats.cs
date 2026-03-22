@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class RuntimeCharacterStats : ICharacterStats
+public class RuntimeCharacterStats :  ICharacterStats
 {
     public float MaxHP { get; }
     public float CurrentHP { get; private set; }
@@ -11,7 +12,7 @@ public class RuntimeCharacterStats : ICharacterStats
     public float Damage { get; private set; }
     public float Speed { get; }
 
-    public bool IsDead => CurrentHP <= 0;
+    public UnityEvent IsDead = new();
 
     public RuntimeCharacterStats(CharacterStatsData data)
     {
@@ -27,6 +28,10 @@ public class RuntimeCharacterStats : ICharacterStats
     public void TakeDamage(float amount)
     {
         CurrentHP = Mathf.Max(0, CurrentHP - amount);
+        if (CurrentHP == 0)
+        {
+            IsDead.Invoke();
+        }
     }
 
     public void UseMP(float amount)

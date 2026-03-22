@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PiercingProjectileBehaviour : BaseProjectileComponent
 {
-    public override bool OnHit(Projectile p, EnemyController target)
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         if (target != null && target.stats != null)
         {

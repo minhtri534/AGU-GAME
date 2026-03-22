@@ -5,7 +5,7 @@ public class ExplosiveProjectileBehaviour : BaseProjectileComponent
     [SerializeField] private float radius = 3f;
     [SerializeField] private float damageMultiplier = 1f;
 
-    public override bool OnHit(Projectile p, EnemyController target)
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         // Explode on any collision (enemy or wall)
         p.QueueOnBreak();
@@ -26,10 +26,6 @@ public class ExplosiveProjectileBehaviour : BaseProjectileComponent
             }
 
             enemy.stats.TakeDamage(p.Damage * damageMultiplier);
-            if (enemy.stats.IsDead)
-            {
-                enemy.Die();
-            }
         }
 
         return true;

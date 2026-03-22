@@ -6,7 +6,7 @@ public class PoisonProjectileBehaviour : BaseProjectileComponent
     [SerializeField] private float poisonDuration = 3f;
     [SerializeField] private float tickInterval = 0.5f;
 
-    public override bool OnHit(Projectile p, EnemyController target)
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         if (target == null)
         {

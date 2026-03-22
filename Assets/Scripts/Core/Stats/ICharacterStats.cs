@@ -9,8 +9,6 @@ public interface ICharacterStats
     float Damage { get; }
     float Speed { get; }
 
-    bool IsDead { get; }
-
     void TakeDamage(float amount);
     void UseMP(float amount);
 }

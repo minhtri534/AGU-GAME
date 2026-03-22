@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : CharacterController
 {
     [Header("Stats")]
     public EnemyStatsData statsData;
@@ -12,10 +12,8 @@ public class EnemyController : MonoBehaviour
     public Vector2 retreatTimeRange;
 
     [HideInInspector] public Transform player;
-    [HideInInspector] public Rigidbody rb;
     [HideInInspector] public float stateTimer;
     [HideInInspector] public int orbitDir;
-    [HideInInspector] public RuntimeCharacterStats stats;
 
     private IEnemyState currentState;
     public System.Action<EnemyController> OnEnemyDeath;
@@ -31,6 +29,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         stats = new RuntimeCharacterStats(statsData);
+        stats.IsDead.AddListener(Die);
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         ChangeState(new EnemyChaseState());
     }

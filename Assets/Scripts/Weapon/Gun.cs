@@ -3,17 +3,17 @@ using UnityEngine;
 using UnityEngine.InputSystem; // BẮT BUỘC: Thêm dòng này để dùng hệ thống Input mới
 
 /// <summary>
-/// The gun, meant to be used by players
+/// The gun, can be used by either the player or the enemy
 /// </summary>
 public class Gun : MonoBehaviour
 {
     [Header("Settings")]
-    public GameObject bulletPrefab; // Kéo Prefab viên đạn vào đây
+    public bool isEnemyWeapon = false;
     public Transform firePoint;     // Kéo GameObject vị trí đầu nòng súng vào đây
     private GunInput gunInput;
-    private PlayerController player;
     public GunStats stats;
     public GunComponentInventory inventory;
+    public IGunAimTarget AimTarget;
     private bool canFire = true;
 
     public GunStats GetStats()
@@ -23,10 +23,18 @@ public class Gun : MonoBehaviour
 
     void Awake()
     {
-        player = GetComponent<PlayerController>();
-        gunInput = gameObject.AddComponent<GunInput>();
         stats = new GunStats();
         inventory = new GunComponentInventory(stats);
+        if (isEnemyWeapon)
+        {
+            gunInput = gameObject.AddComponent<GunInputEnemy>();
+            AimTarget = new GunAimTargetEnemy();
+        }
+        else
+        {
+            gunInput = gameObject.AddComponent<GunInput>();
+            AimTarget = new GunAimTargetPlayer();
+        }
     }
 
     void Update()
@@ -36,7 +44,7 @@ public class Gun : MonoBehaviour
         {
             if (gunInput.GetInput() == GunInputState.JustPressed)
             {
-                Shoot(Aim());
+                Shoot(AimTarget.Aim(firePoint.position));
             }
         }
         else
@@ -46,55 +54,12 @@ public class Gun : MonoBehaviour
 
     }
     /// <summary>
-    /// Returns the rotation to the mouse position
-    /// </summary>
-    /// <remarks>
-    /// TODO: create a child class for enemies that overrides this function to aim at players instead
-    /// </remarks>
-    /// <returns></returns>
-    public Quaternion Aim()
-    {
-        if (Camera.main == null) return Quaternion.identity; // Kiểm tra camera
-
-        // SỬA LỖI: Dùng Mouse.current.position thay vì Input.mousePosition
-        Vector2 mouseScreenPos = Vector2.zero;
-        if (Mouse.current != null)
-        {
-            mouseScreenPos = Mouse.current.position.ReadValue();
-        }
-
-        // 1. Tính toán điểm người chơi đang click chuột
-        Ray ray = Camera.main.ScreenPointToRay(mouseScreenPos);
-
-        // Tạo mặt phẳng ảo ngang tầm với súng (để chuột luôn nằm trên mặt phẳng này)
-        Plane plane = new(Vector3.up, firePoint.position);
-
-        Vector3 hitPoint = Vector3.zero;
-        if (plane.Raycast(ray, out float enter))
-        {
-            hitPoint = ray.GetPoint(enter);
-        }
-        else
-        {
-            // Fallback nếu click ra ngoài trời
-            hitPoint = ray.GetPoint(50f);
-        }
-
-        // 2. Tính hướng từ súng tới điểm click
-        Vector3 direction = hitPoint - firePoint.position;
-        direction.y = 0; // Giữ đạn bay ngang, không cắm đầu xuống đất
-
-        if (direction == Vector3.zero) return Quaternion.identity;
-
-        return Quaternion.LookRotation(direction);
-    }
-    /// <summary>
     /// Fires projectiles
     /// </summary>
     /// <param name="rotation"></param>
     public void Shoot(Quaternion rotation)
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (firePoint == null) return;
 
         if (!canFire)
         {
@@ -134,6 +99,16 @@ public class Gun : MonoBehaviour
     {
         GameObject bulletObj = Instantiate(stats.ProjectilePrefab, firePoint.position, rotation);
 
+        // Make projectiles ignore character collisions
+        if (isEnemyWeapon)
+        {
+            bulletObj.GetComponent<Collider>().excludeLayers += LayerMask.GetMask("Enemy");
+        } else
+        {
+            bulletObj.GetComponent<Collider>().excludeLayers += LayerMask.GetMask("Player");
+        }
+        
+
         Projectile bullet = bulletObj.GetComponent<Projectile>();
 
         if (bullet != null)
@@ -148,7 +123,7 @@ public class Gun : MonoBehaviour
             bullet.Size = stats.GetProjectileSize();
             // Add projectile components
             inventory.GetTypeModifierComponent()?.AddComponentsToProjectile(bullet);
-            for (int i = 0; i < inventory.InventorySize; i++) 
+            for (int i = 0; i < inventory.InventorySize; i++)
             {
                 inventory.GetBehaviourModifierComponent(i)?.AddComponentsToProjectile(bullet);
             }

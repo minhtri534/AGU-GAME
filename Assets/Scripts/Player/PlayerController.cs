@@ -2,15 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterController
 {
     [Header("Stats")]
     public PlayerStatsData statsData;
-
-    private RuntimeCharacterStats stats;
     private IMovementInput input;
     private PlayerMotor motor;
-    private Rigidbody rb;
 
     private IPlayerSkill skill;  
 
@@ -21,6 +18,7 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = true;   
 
         stats = new RuntimeCharacterStats(statsData);
+        stats.IsDead.AddListener(Die);
 
         input = new KeyboardInput();
         motor = new PlayerMotor(rb, stats.Speed);
@@ -45,5 +43,10 @@ public class PlayerController : MonoBehaviour
     public RuntimeCharacterStats GetStats()
     {
         return stats;
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }

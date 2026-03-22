@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7819915322427262910}
   - component: {fileID: 6424634958751319349}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 5543699404798750344}
   - component: {fileID: 7546516176343080294}
   - component: {fileID: 3332696552166420706}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3257852356815051516}
   - component: {fileID: 1561738097704828437}
   - component: {fileID: 1978731236428017035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

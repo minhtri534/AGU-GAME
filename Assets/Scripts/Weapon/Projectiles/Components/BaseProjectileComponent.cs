@@ -25,7 +25,7 @@ public abstract class BaseProjectileComponent : MonoBehaviour
     }
 
     // Called when the projectile collides
-    public virtual bool OnHit(Projectile p, EnemyController target) // update this to include the player as well
+    public virtual bool OnHit(Projectile p, CharacterController target) // update this to include the player as well
     {
         return false;
     }

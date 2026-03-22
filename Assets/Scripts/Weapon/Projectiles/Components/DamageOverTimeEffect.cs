@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class DamageOverTimeEffect : MonoBehaviour
 {
-    private EnemyController target;
+    private CharacterController target;
     private float damagePerTick;
     private float tickInterval;
     private float timeRemaining;
     private float tickTimer;
 
-    public void Initialize(EnemyController newTarget, float totalDamage, float durationSeconds, float tickIntervalSeconds)
+    public void Initialize(CharacterController newTarget, float totalDamage, float durationSeconds, float tickIntervalSeconds)
     {
         target = newTarget;
         tickInterval = Mathf.Max(0.05f, tickIntervalSeconds);
@@ -35,13 +35,6 @@ public class DamageOverTimeEffect : MonoBehaviour
         {
             tickTimer = tickInterval;
             target.stats.TakeDamage(damagePerTick);
-
-            if (target.stats.IsDead)
-            {
-                target.Die();
-                Destroy(this);
-                return;
-            }
         }
 
         if (timeRemaining <= 0f)

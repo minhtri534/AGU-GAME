@@ -4,8 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent onPointerEnter;
-    public UnityEvent onPointerExit;
+    public UnityEvent onPointerEnter = new();
+    public UnityEvent onPointerExit = new();
     public void OnPointerEnter(PointerEventData eventData)
     {
         onPointerEnter.Invoke();

@@ -4,7 +4,7 @@ public class KnockbackProjectileBehaviour : BaseProjectileComponent
 {
     [SerializeField] private float force = 8f;
 
-    public override bool OnHit(Projectile p, EnemyController target)
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         if (target == null || target.rb == null)
         {

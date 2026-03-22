@@ -6,7 +6,7 @@ public class ChainLightningProjectileBehaviour : BaseProjectileComponent
     [SerializeField] private int maxExtraTargets = 3;
     [SerializeField] private float extraDamageMultiplier = 0.5f;
 
-    public override bool OnHit(Projectile p, EnemyController target)
+    public override bool OnHit(Projectile p, CharacterController target)
     {
         if (target == null)
         {
@@ -31,10 +31,6 @@ public class ChainLightningProjectileBehaviour : BaseProjectileComponent
             }
 
             enemy.stats.TakeDamage(p.Damage * extraDamageMultiplier);
-            if (enemy.stats.IsDead)
-            {
-                enemy.Die();
-            }
 
             hits++;
         }

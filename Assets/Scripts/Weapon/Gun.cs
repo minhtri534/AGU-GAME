@@ -21,7 +21,7 @@ public class Gun : MonoBehaviour
         return stats;
     }
 
-    void Awake()
+    void Start()
     {
         stats = new GunStats();
         inventory = new GunComponentInventory(stats);

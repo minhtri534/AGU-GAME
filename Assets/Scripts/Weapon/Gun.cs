@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem; // BẮT BUỘC: Thêm dòng này để dùng hệ thống Input mới
 
 /// <summary>
 /// The gun, can be used by either the player or the enemy
@@ -117,7 +118,10 @@ public class Gun : MonoBehaviour
             // and change the player influence to be a multiplier instead
             //float playerDamage = player.GetStats().Damage;
             //bullet.SetDamage(playerDamage);
-            bullet.Stats = stats;
+            bullet.Damage = stats.GetDamage();
+            bullet.Speed = stats.GetProjectileSpeed();
+            bullet.LifeTime = stats.GetProjectileLifeTime();
+            bullet.Size = stats.GetProjectileSize();
             // Add projectile components
             inventory.GetTypeModifierComponent()?.AddComponentsToProjectile(bullet);
             for (int i = 0; i < inventory.InventorySize; i++)

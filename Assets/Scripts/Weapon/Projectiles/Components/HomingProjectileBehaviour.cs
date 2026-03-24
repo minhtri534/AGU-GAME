@@ -36,7 +36,7 @@ public class HomingProjectileBehaviour : BaseProjectileComponent
 
         var maxRadians = Mathf.Deg2Rad * turnSpeedDegreesPerSecond * Time.deltaTime;
         var newDir = Vector3.RotateTowards(currentDir, desiredDir, maxRadians, 0f);
-        p.rb.linearVelocity = newDir * p.Stats.GetProjectileSpeed();
+        p.rb.linearVelocity = newDir * p.Speed;
         return true;
     }
 

@@ -6,7 +6,7 @@ public class DefaultProjectileBehaviour : BaseProjectileComponent
     // Fires bullet and self destroy after some time
     public override bool OnShot(Projectile p)
     {
-        p.rb.linearVelocity = p.transform.forward * p.Stats.GetProjectileSpeed(); 
+        p.rb.linearVelocity = p.transform.forward * p.Speed; 
         return false;
     }
     
@@ -15,7 +15,7 @@ public class DefaultProjectileBehaviour : BaseProjectileComponent
     {
         if (target != null && target.stats != null)
         {
-            target.stats.TakeDamage(p.Stats.GetDamage());
+            target.stats.TakeDamage(p.Damage);
             Debug.Log("Hit " + target + "! HP còn: " + target.stats.CurrentHP);
         }
         p.QueueOnBreak(); // Break after hit

@@ -9,7 +9,7 @@ public class CriticalHitProjectileBehaviour : BaseProjectileComponent
     {
         if (Random.value <= critChance)
         {
-            p.Stats.SetDamage(p.Stats.GetDamage() * Mathf.Max(1f, critMultiplier));
+            p.Damage *= Mathf.Max(1f, critMultiplier);
         }
         return false;
     }

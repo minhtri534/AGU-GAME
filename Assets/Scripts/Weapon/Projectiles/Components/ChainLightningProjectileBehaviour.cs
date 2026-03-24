@@ -30,7 +30,7 @@ public class ChainLightningProjectileBehaviour : BaseProjectileComponent
                 continue;
             }
 
-            enemy.stats.TakeDamage(p.Stats.GetDamage() * extraDamageMultiplier);
+            enemy.stats.TakeDamage(p.Damage * extraDamageMultiplier);
 
             hits++;
         }

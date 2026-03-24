@@ -21,10 +21,14 @@ public class Gun : MonoBehaviour
         return stats;
     }
 
+    void Awake()
+    {
+        stats = new();
+        inventory = new(stats);
+    }
+
     void Start()
     {
-        stats = new GunStats();
-        inventory = new GunComponentInventory(stats);
         if (isEnemyWeapon)
         {
             gunInput = gameObject.AddComponent<GunInputEnemy>();
@@ -122,6 +126,8 @@ public class Gun : MonoBehaviour
             bullet.Speed = stats.GetProjectileSpeed();
             bullet.LifeTime = stats.GetProjectileLifeTime();
             bullet.Size = stats.GetProjectileSize();
+            bullet.ProjectileOwner = this;
+            bullet.GunStats = stats;
             // Add projectile components
             inventory.GetTypeModifierComponent()?.AddComponentsToProjectile(bullet);
             for (int i = 0; i < inventory.InventorySize; i++)

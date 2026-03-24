@@ -13,7 +13,9 @@ public class Projectile : MonoBehaviour
     public float LifeTime;
     public float Size;
     public float Damage;
+    public GunStats GunStats;
     public Rigidbody rb;
+    public Gun ProjectileOwner;
     private bool isOnBreakQueued = false;
 
     private BaseProjectileComponent defaultBehaviour;

@@ -7,7 +7,7 @@ public class GhostProjectileBehaviour : BaseProjectileComponent
         // Ignore all collisions (walls) but still damage enemies.
         if (target != null && target.stats != null)
         {
-            target.stats.TakeDamage(p.Damage);
+            target.stats.TakeDamage(p.Stats.GetDamage());
         }
 
         return true;

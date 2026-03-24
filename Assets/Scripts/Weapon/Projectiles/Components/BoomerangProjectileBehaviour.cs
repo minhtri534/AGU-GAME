@@ -40,7 +40,7 @@ public class BoomerangProjectileBehaviour : BaseProjectileComponent
             dir = initialDir;
         }
 
-        p.rb.linearVelocity = dir * p.Speed;
+        p.rb.linearVelocity = dir * p.Stats.GetProjectileSpeed();
         return true;
     }
 }

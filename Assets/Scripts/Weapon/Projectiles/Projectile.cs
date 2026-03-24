@@ -9,10 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
 public class Projectile : MonoBehaviour
 {
-    public float Speed;
-    public float LifeTime;
-    public float Size;
-    public float Damage;
+    public GunStats Stats;
     public Rigidbody rb;
     private bool isOnBreakQueued = false;
 
@@ -80,7 +77,7 @@ public class Projectile : MonoBehaviour
     // Called whenever the projectile has just been fired
     private void OnShot()
     {
-        gameObject.transform.localScale *= Size;
+        gameObject.transform.localScale *= Stats.GetProjectileSize();
         StartCoroutine(DestroyAfterLifeTime());
         var overrideDefault = false;
         foreach (var component in projectileComponents)
@@ -161,7 +158,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator DestroyAfterLifeTime()
     {
-        yield return new WaitForSeconds(LifeTime);
+        yield return new WaitForSeconds(Stats.GetProjectileLifeTime());
         QueueOnBreak();
     }
 }

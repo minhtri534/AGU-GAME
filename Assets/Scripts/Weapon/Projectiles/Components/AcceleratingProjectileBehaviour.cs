@@ -9,15 +9,15 @@ public class AcceleratingProjectileBehaviour : BaseProjectileComponent
 
     public override bool OnShot(Projectile p)
     {
-        baseSpeed = Mathf.Max(0.1f, p.Speed);
+        baseSpeed = Mathf.Max(0.1f, p.Stats.GetProjectileSpeed());
         return false;
     }
 
     public override bool OnTraveling(Projectile p)
     {
         var maxSpeed = baseSpeed * Mathf.Max(1f, maxSpeedMultiplier);
-        p.Speed = Mathf.Min(maxSpeed, p.Speed + accelerationPerSecond * Time.deltaTime);
-        p.rb.linearVelocity = p.transform.forward * p.Speed;
+        p.Stats.SetProjectileSpeed(Mathf.Min(maxSpeed, p.Stats.GetProjectileSpeed() + accelerationPerSecond * Time.deltaTime));
+        p.rb.linearVelocity = p.transform.forward * p.Stats.GetProjectileSpeed();
         return true;
     }
 }

@@ -22,8 +22,8 @@ public class ClusterProjectileBehaviour : BaseProjectileComponent
             child.transform.position = p.transform.position + (child.transform.forward * 0.25f);
             child.transform.rotation = Quaternion.AngleAxis((360f / count) * i, Vector3.up) * p.transform.rotation;
 
-            child.Damage = p.Damage * childDamageMultiplier;
-            child.Speed = p.Speed * childSpeedMultiplier;
+            child.Stats.SetDamage(p.Stats.GetDamage() * childDamageMultiplier);
+            child.Stats.SetProjectileSpeed(p.Stats.GetProjectileSpeed() * childSpeedMultiplier);
 
             var cluster = child.GetComponent<ClusterProjectileBehaviour>();
             if (cluster != null)

@@ -25,7 +25,7 @@ public class ExplosiveProjectileBehaviour : BaseProjectileComponent
                 continue;
             }
 
-            enemy.stats.TakeDamage(p.Damage * damageMultiplier);
+            enemy.stats.TakeDamage(p.Stats.GetDamage() * damageMultiplier);
         }
 
         return true;

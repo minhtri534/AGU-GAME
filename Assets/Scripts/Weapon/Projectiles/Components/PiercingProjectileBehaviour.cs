@@ -6,7 +6,7 @@ public class PiercingProjectileBehaviour : BaseProjectileComponent
     {
         if (target != null && target.stats != null)
         {
-            target.stats.TakeDamage(p.Damage);
+            target.stats.TakeDamage(p.Stats.GetDamage());
         }
 
         return true;

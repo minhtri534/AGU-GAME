@@ -9,6 +9,7 @@ public class PiercingAmmoItem : BehaviourModifierComponent
         
         stats.SetProjectileSpeed(newSpeed);
         stats.SetDamage(newDamage);
+        stats.SetExtraStat("Pierce", stats.GetExtraStat("Pierce") + 1);
     }
 
     public override void AddComponentsToProjectile(Projectile p)

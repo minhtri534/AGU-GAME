@@ -30,6 +30,7 @@ public class EnemyController : CharacterController
     {
         stats = new RuntimeCharacterStats(statsData);
         stats.IsDead.AddListener(Die);
+        // TODO: replace tag with specific individual players instead for multiplayer
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         ChangeState(new EnemyChaseState());
     }

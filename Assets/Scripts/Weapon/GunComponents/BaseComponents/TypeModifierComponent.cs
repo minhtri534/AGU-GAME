@@ -3,6 +3,7 @@ using UnityEngine;
 // Component type that changes the projectile type
 public abstract class TypeModifierComponent : BehaviourModifierComponent
 {
+    public bool OverrideDefaultGunControl = false;
     public TypeModifierComponent() : base()
     {
         isTypeComponent = true;

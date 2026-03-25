@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem; // BẮT BUỘC: Thêm dòng này để dùng hệ thống Input mới
 
 /// <summary>
 /// The gun, can be used by either the player or the enemy
@@ -44,16 +43,16 @@ public class Gun : MonoBehaviour
     void Update()
     {
         // Fallback if no type modifier component is equipped
-        if (inventory.GetTypeModifierComponent() == null)
+        if (inventory.GetTypeModifierComponent() != null && inventory.GetTypeModifierComponent().OverrideDefaultGunControl)
+        {
+            inventory.GetTypeModifierComponent().ManageGun(gunInput.GetInput(), this);
+        }
+        else
         {
             if (gunInput.GetInput() == GunInputState.JustPressed)
             {
                 Shoot(AimTarget.Aim(firePoint.position));
             }
-        }
-        else
-        {
-            inventory.GetTypeModifierComponent().ManageGun(gunInput.GetInput(), this);
         }
 
     }

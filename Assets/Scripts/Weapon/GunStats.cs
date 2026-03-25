@@ -42,9 +42,9 @@ public class GunStats
     }
     public void SetProjectileSpeed(float value)
     {
-        if (value < 0.1)
+        if (value < 0.01)
         {
-            value = 0.1f;
+            value = 0.01f;
         }
         projectileSpeed = value;
     }
@@ -54,9 +54,9 @@ public class GunStats
     }
     public void SetProjectileLifeTime(float value)
     {
-        if (value < 0.1)
+        if (value < 0.01)
         {
-            value = 0.1f;
+            value = 0.01f;
         }
         projectileLifeTime = value;
     }
@@ -66,9 +66,9 @@ public class GunStats
     }
     public void SetReloadTime(float value)
     {
-        if (value < 0.1)
+        if (value < 0.01)
         {
-            reloadTime = 0.1f;
+            reloadTime = 0.01f;
         }
         reloadTime = value;
     }
@@ -106,9 +106,9 @@ public class GunStats
     }
     public void SetProjectileSize(float value)
     {
-        if (value < 0.1)
+        if (value < 0.01)
         {
-            projectileSize = 0.1f;
+            projectileSize = 0.01f;
         }
         projectileSize = value;
     }

@@ -13,6 +13,7 @@ public class RuntimeCharacterStats :  ICharacterStats
     public float Speed { get; }
 
     public UnityEvent IsDead = new();
+    public UnityEvent IsHurt = new();
 
     public RuntimeCharacterStats(CharacterStatsData data)
     {
@@ -28,6 +29,7 @@ public class RuntimeCharacterStats :  ICharacterStats
     public void TakeDamage(float amount)
     {
         CurrentHP = Mathf.Max(0, CurrentHP - amount);
+        IsHurt.Invoke();
         if (CurrentHP == 0)
         {
             IsDead.Invoke();

@@ -19,6 +19,7 @@ public class PlayerController : CharacterController
 
         stats = new RuntimeCharacterStats(statsData);
         stats.IsDead.AddListener(Die);
+        stats.IsHurt.AddListener(TakeDamageAnimation);
 
         input = new KeyboardInput();
         motor = new PlayerMotor(rb, stats.Speed);

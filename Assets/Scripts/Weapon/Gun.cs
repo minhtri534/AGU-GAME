@@ -106,6 +106,8 @@ public class Gun : MonoBehaviour
         if (isEnemyWeapon)
         {
             bulletObj.GetComponent<Collider>().excludeLayers += LayerMask.GetMask("Enemy");
+            // change colour to indicate that its enemy bullets
+            bulletObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/BulletEnemy");
         }
         else
         {

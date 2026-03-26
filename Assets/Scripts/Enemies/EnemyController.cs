@@ -58,12 +58,16 @@ public class EnemyController : CharacterController
     {
         float r = Random.value;
 
-        if (r < 0.4f)
+        if (r < 0.2f)
             ChangeState(new EnemyChaseState());
-        else if (r < 0.75f)
+        else if (r < 0.55f)
             ChangeState(new EnemyOrbitState());
-        else
+        else if (r < 0.7f)
             ChangeState(new EnemyRetreatState());
+        else
+        {
+            ChangeState(ScriptableObject.CreateInstance<EnemyAttackState>());
+        }
     }
 
     public void Die()

@@ -1,32 +1,49 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject characterSelectPanel;
-    public GameObject healerPrefab;
-    public GameObject berserkerPrefab;
+    public GameObject PlayerPrefab;
     public PlayerCamera playerCamera;
     public PlayerUI playerUI;
 
     public Transform spawnPoint;
 
     public EnemySpawner spawner;
+ 
+    void Awake()
+    {
+        PlayerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+    }
 
     public void SpawnHealer()
     {
-        SpawnPlayer(healerPrefab);
+        SpawnPlayer(CharacterClass.Healer);
     }
 
     public void SpawnBerserker()
     {
-        SpawnPlayer(berserkerPrefab);
+        SpawnPlayer(CharacterClass.Berserker);
     }
 
-    void SpawnPlayer(GameObject prefab)
+    void SpawnPlayer(CharacterClass character)
     {
-        GameObject playerObj = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+        GameObject playerObj = Instantiate(PlayerPrefab, spawnPoint.position, Quaternion.identity);
+        var controller = playerObj.GetComponent<PlayerController>();
+        switch (character)
+        {
+            case CharacterClass.Berserker:
+                controller.statsData = Resources.Load<PlayerStatsData>("CharacterStats/PlayerStats/Player_Berserker");
+                //playerObj.GetComponent<MeshRenderer>().material.mainTexture = Resources.Load<Sprite>();
+                playerObj.AddComponent<BerserkerSkill>();
+                break;
+            case CharacterClass.Healer:
+                controller.statsData = Resources.Load<PlayerStatsData>("CharacterStats/PlayerStats/Player_Healer");
+                playerObj.AddComponent<HealerSkill>();
+                break;
+        }
 
-        PlayerController controller = playerObj.GetComponent<PlayerController>();
 
         playerCamera.SetPlayer(controller);
         playerUI.SetPlayer(controller);
@@ -58,7 +75,13 @@ public class GameManager : MonoBehaviour
         source.loop = true;
         source.volume *= 0.5f;
         source.Play();
-        
+
         // END OF TEST CODE
     }
+}
+
+enum CharacterClass
+{
+    Berserker,
+    Healer,
 }

@@ -8350,8 +8350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   characterSelectPanel: {fileID: 900026997}
-  healerPrefab: {fileID: 3666649409165031659, guid: 5e867456e68db54408cd5c49f7ffa82b, type: 3}
-  berserkerPrefab: {fileID: 3666649409165031659, guid: 023967db6737d794688b010e28a63ec8, type: 3}
+  PlayerPrefab: {fileID: 0}
   playerCamera: {fileID: 330585548}
   playerUI: {fileID: 2127995509}
   spawnPoint: {fileID: 1813349411}

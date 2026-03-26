@@ -12,7 +12,7 @@ public class GunInput : MonoBehaviour
     {
         shootAction = InputSystem.actions.FindAction("Player/Shoot");
     }
-    public GunInputState GetInput()
+    public virtual GunInputState GetInput()
     {
 
         if (shootAction.WasPressedThisFrame())

@@ -11,7 +11,7 @@ public class PlayerController : CharacterController
 
     private IPlayerSkill skill;  
 
-    void Awake()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;

@@ -24,7 +24,7 @@ public class GunInputEnemy : GunInput
         }
     }
 
-    public new GunInputState GetInput()
+    public override GunInputState GetInput()
     {
       return currentState;
     }

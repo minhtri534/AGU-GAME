@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
     [Header("Settings")]
     public bool isEnemyWeapon = false;
     public Transform firePoint;     // Kéo GameObject vị trí đầu nòng súng vào đây
-    private GunInput gunInput;
+    public GunInput GunInput;
     public GunStats stats;
     public GunComponentInventory inventory;
     public IGunAimTarget AimTarget;
@@ -30,12 +30,12 @@ public class Gun : MonoBehaviour
     {
         if (isEnemyWeapon)
         {
-            gunInput = gameObject.AddComponent<GunInputEnemy>();
+            GunInput = gameObject.AddComponent<GunInputEnemy>();
             AimTarget = new GunAimTargetEnemy();
         }
         else
         {
-            gunInput = gameObject.AddComponent<GunInput>();
+            GunInput = gameObject.AddComponent<GunInput>();
             AimTarget = new GunAimTargetPlayer();
         }
     }
@@ -45,11 +45,11 @@ public class Gun : MonoBehaviour
         // Fallback if no type modifier component is equipped
         if (inventory.GetTypeModifierComponent() != null && inventory.GetTypeModifierComponent().OverrideDefaultGunControl)
         {
-            inventory.GetTypeModifierComponent().ManageGun(gunInput.GetInput(), this);
+            inventory.GetTypeModifierComponent().ManageGun(GunInput.GetInput(), this);
         }
         else
         {
-            if (gunInput.GetInput() == GunInputState.JustPressed)
+            if (GunInput.GetInput() == GunInputState.JustPressed)
             {
                 Shoot(AimTarget.Aim(firePoint.position));
             }

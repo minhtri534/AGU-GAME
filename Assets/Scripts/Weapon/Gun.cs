@@ -38,6 +38,7 @@ public class Gun : MonoBehaviour
             GunInput = gameObject.AddComponent<GunInput>();
             AimTarget = new GunAimTargetPlayer();
         }
+        StartCoroutine(RestoreMana());
     }
 
     void Update()
@@ -68,6 +69,14 @@ public class Gun : MonoBehaviour
         {
             return;
         }
+
+        if ((int)stats.GetManaPerShot() > gameObject.GetComponent<CharacterController>().stats.CurrentMP)
+        {
+            return;
+        }
+
+        gameObject.GetComponent<CharacterController>().stats.UseMP((int)stats.GetManaPerShot());
+
         switch (stats.ShotType)
         {
             case ShotType.Normal:
@@ -148,5 +157,12 @@ public class Gun : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         CreateProjectile(rotation);
+    }
+
+    private IEnumerator RestoreMana()
+    {
+        yield return new WaitForSeconds(stats.GetReloadTime());
+        gameObject.GetComponent<CharacterController>().stats.UseMP(-stats.GetManaRecoveryRate());
+        StartCoroutine(RestoreMana());
     }
 }

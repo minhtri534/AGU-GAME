@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-public class EnemyAttackState : ScriptableObject, IEnemyState
+public class EnemyAttackState : IEnemyState
 {
     private Gun gun;
     private Coroutine attackCoroutine;

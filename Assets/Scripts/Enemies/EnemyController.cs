@@ -66,7 +66,7 @@ public class EnemyController : CharacterController
             ChangeState(new EnemyRetreatState());
         else
         {
-            ChangeState(ScriptableObject.CreateInstance<EnemyAttackState>());
+            ChangeState(new EnemyAttackState());
         }
     }
 

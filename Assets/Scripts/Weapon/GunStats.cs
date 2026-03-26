@@ -16,6 +16,8 @@ public class GunStats
     public readonly ShotType BaseShotType = ShotType.Normal;
     public readonly GameObject BaseProjectilePrefab = Resources.Load<GameObject>("Prefabs/Projectiles/Bullet");
     private readonly Dictionary<string, float> extraStats = new();
+    private readonly float BaseManaRecoveryRate = 0.2f; // 0.1 mana per second
+    private readonly float BaseManaPerShot = 1; // rounded down whenever a shot is fired
     // These stats are updated using base stats whenever a new component is added
     private float damage;
     private float projectileSpeed;
@@ -26,6 +28,8 @@ public class GunStats
     private float projectileSize;
     public ShotType ShotType;
     public GameObject ProjectilePrefab;
+    private float manaRecoveryRate;
+    private float manaPerShot;
     
 
     public void SetDamage(float value)
@@ -135,6 +139,30 @@ public class GunStats
             extraStats[stats] = value;
         }
     }
+    public float GetManaRecoveryRate()
+    {
+        return manaRecoveryRate;
+    }
+    public void SetManaRecoveryRate(float value)
+    {
+        if (value < 0.01)
+        {
+            manaRecoveryRate = 0.01f;
+        }
+        manaRecoveryRate = value;
+    }
+    public float GetManaPerShot()
+    {
+        return manaPerShot;
+    }
+    public void SetManaPerShot(float value)
+    {
+        if (value < 1)
+        {
+            manaPerShot = 1f;
+        }
+        manaPerShot = value;
+    }
     public GunStats()
     {
         ResetStats();
@@ -158,6 +186,8 @@ public class GunStats
         ProjectilePrefab = BaseProjectilePrefab;
         projectileSize = BaseProjectileSize;
         extraStats.Clear();
+        manaRecoveryRate = BaseManaRecoveryRate;
+        manaPerShot = BaseManaPerShot;
     }
 }
 

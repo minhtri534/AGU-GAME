@@ -123,6 +123,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6534897861612520243, guid: 5d00d6d6e5ef9fa4bb983bd922db6242, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8600271064837558666}
+    - targetCorrespondingSourceObject: {fileID: 6534897861612520243, guid: 5d00d6d6e5ef9fa4bb983bd922db6242, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4539551917816762822}
+    - targetCorrespondingSourceObject: {fileID: 6534897861612520243, guid: 5d00d6d6e5ef9fa4bb983bd922db6242, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1409933217619437388}
   m_SourcePrefab: {fileID: 100100000, guid: 5d00d6d6e5ef9fa4bb983bd922db6242, type: 3}
 --- !u!54 &625392382414745295 stripped
 Rigidbody:
@@ -148,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
   isEnemyWeapon: 0
   firePoint: {fileID: 2598400105583448586}
+  GunInput: {fileID: 0}
 --- !u!114 &2014228036531347396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +191,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4539551917816762822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5752457830848318563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1409933217619437388}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1409933217619437388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5752457830848318563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformView
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!4 &8587595162114832370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7082208781211842722, guid: 5d00d6d6e5ef9fa4bb983bd922db6242, type: 3}

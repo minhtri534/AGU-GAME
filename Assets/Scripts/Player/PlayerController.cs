@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun; 
 
 public class PlayerController : CharacterController
 {
@@ -8,6 +9,13 @@ public class PlayerController : CharacterController
     private IMovementInput input;
     private PlayerMotor motor;
     private IPlayerSkill skill;
+
+    private PhotonView photonView;
+
+    void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 
     void Start()
     {
@@ -20,8 +28,11 @@ public class PlayerController : CharacterController
         stats.IsDead.AddListener(Die);
         stats.IsHurt.AddListener(TakeDamageAnimation);
 
-        input = new KeyboardInput();
-        motor = new PlayerMotor(rb, stats.Speed);
+        if (photonView.IsMine)
+        {
+            input = new KeyboardInput();
+            motor = new PlayerMotor(rb, stats.Speed);
+        }
 
         skill = GetComponent<IPlayerSkill>();
     }
@@ -36,6 +47,8 @@ public class PlayerController : CharacterController
 
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         if (Keyboard.current.xKey.wasPressedThisFrame)
         {
             skill?.Activate();
@@ -44,7 +57,7 @@ public class PlayerController : CharacterController
 
     void FixedUpdate()
     {
-        if (input != null && motor != null)
+        if (photonView.IsMine && input != null && motor != null)
         {
             Vector3 moveDir = input.GetMovement();
             motor.Move(moveDir);
@@ -53,12 +66,15 @@ public class PlayerController : CharacterController
 
     public RuntimeCharacterStats GetStats()
     {
-        CheckStats(); 
+        CheckStats();
         return stats;
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 }

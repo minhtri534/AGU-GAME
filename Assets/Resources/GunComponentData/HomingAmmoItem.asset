@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Homing Ammo
   Description: Bullets home toward nearby enemies,slightly slower
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 2

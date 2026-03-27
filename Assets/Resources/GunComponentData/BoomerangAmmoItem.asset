@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Boomerang Ammo
   Description: Bullets fly out then reverse direction
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

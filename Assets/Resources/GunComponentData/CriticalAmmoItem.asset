@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Critical Ammo
   Description: Chance to crit for multiplied damage, slightly lower base damage
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

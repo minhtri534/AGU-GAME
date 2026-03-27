@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Cluster Ammo
   Description: Bullets split into multiple bullets when they break
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 3

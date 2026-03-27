@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f377c50e16eb36c4c8b4f2d1f57896e5, type: 3}
-  m_Name: PoisonAmmoItem
+  m_Name: AtkupLegendary
   m_EditorClassIdentifier: Assembly-CSharp::GunComponentData
-  ComponentClass: PoisonAmmoItem
-  ComponentName: Poison Ammo
-  Description: Applies damage-over-time after hit, lower direct damage
-  Sprite: {fileID: 21300000, guid: 5b9a2f5dd972b2d43af907802d69c9f9, type: 3}
-  Rarity: 2
+  ComponentClass: AtkupLegendary
+  ComponentName: AtkupLegendary
+  Description: dmg x 2.0
+  Sprite: {fileID: 0}
+  Rarity: 4

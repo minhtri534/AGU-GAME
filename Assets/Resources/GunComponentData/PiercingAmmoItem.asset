@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Piercing Ammo
   Description: Bullets pierce enemies, more damage, slower bullets
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

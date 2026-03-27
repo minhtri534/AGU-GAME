@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Accelertating Ammo
   Description: Bullets accelerate while flying, lower starting speed
   Sprite: {fileID: 21300000, guid: 6f5fcb5864213214ba42d8dc0df89b84, type: 3}
-  Rarity: 0
+  Rarity: 1

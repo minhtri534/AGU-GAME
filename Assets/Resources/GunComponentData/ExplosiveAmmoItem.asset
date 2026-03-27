@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Explosive Ammo
   Description: Bullets explode on impact, slower fire/bullets
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 2

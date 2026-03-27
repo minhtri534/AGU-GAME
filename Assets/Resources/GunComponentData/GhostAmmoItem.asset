@@ -16,4 +16,4 @@ MonoBehaviour:
   ComponentName: Ghost Ammo
   Description: Bullets phase through collisions, shorter lifetime
   Sprite: {fileID: 0}
-  Rarity: 0
+  Rarity: 1

@@ -1,30 +1,37 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class PlayerController : CharacterController
 {
     [Header("Stats")]
     public PlayerStatsData statsData;
     private IMovementInput input;
     private PlayerMotor motor;
-
-    private IPlayerSkill skill;  
+    private IPlayerSkill skill;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        rb.useGravity = true;   
+        rb.useGravity = true;
 
-        stats = new RuntimeCharacterStats(statsData);
+        CheckStats();
+
         stats.IsDead.AddListener(Die);
         stats.IsHurt.AddListener(TakeDamageAnimation);
 
         input = new KeyboardInput();
         motor = new PlayerMotor(rb, stats.Speed);
 
-        skill = GetComponent<IPlayerSkill>(); 
+        skill = GetComponent<IPlayerSkill>();
+    }
+
+    private void CheckStats()
+    {
+        if (stats == null && statsData != null)
+        {
+            stats = new RuntimeCharacterStats(statsData);
+        }
     }
 
     void Update()
@@ -37,12 +44,16 @@ public class PlayerController : CharacterController
 
     void FixedUpdate()
     {
-        Vector3 moveDir = input.GetMovement();
-        motor.Move(moveDir);
+        if (input != null && motor != null)
+        {
+            Vector3 moveDir = input.GetMovement();
+            motor.Move(moveDir);
+        }
     }
 
     public RuntimeCharacterStats GetStats()
     {
+        CheckStats(); 
         return stats;
     }
 

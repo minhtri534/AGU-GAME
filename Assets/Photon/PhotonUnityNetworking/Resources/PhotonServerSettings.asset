@@ -42,6 +42,8 @@ MonoBehaviour:
   - SetupCharacterClassRPC
   - RPC_SetupRoom
   - UpdateTimerRPC
+  - RPC_ActivateSkill
+  - RPC_TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

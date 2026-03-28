@@ -28,3 +28,10 @@ MonoBehaviour:
       Value: 1
     ComponentRarity: []
     ExcludedComponents: []
+  - UsePreviousDataItem: 0
+    NotSpawningWeight: 0
+    SpawnableComponents:
+    - Key: PiercingAmmoItem
+      Value: 1
+    ComponentRarity: []
+    ExcludedComponents: []

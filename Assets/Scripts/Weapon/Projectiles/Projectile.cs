@@ -11,6 +11,7 @@ using Photon.Pun;
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
 public class Projectile : MonoBehaviour, IPunInstantiateMagicCallback
 {
+    public bool isEnemy = false;
     public float Speed;
     public float LifeTime;
     public float Size;
@@ -34,6 +35,16 @@ public class Projectile : MonoBehaviour, IPunInstantiateMagicCallback
         
         // Cấu hình vật lý cho đạn
         rb.useGravity = false; 
+        if (isEnemy)
+        {
+            gameObject.GetComponent<BoxCollider>().excludeLayers -= LayerMask.GetMask("Player");
+            gameObject.GetComponent<Rigidbody>().excludeLayers -= LayerMask.GetMask("Player");
+        } else
+        {
+            //gameObject.GetComponent<BoxCollider>().excludeLayers -= LayerMask.GetMask("Enemy");
+            gameObject.GetComponent<Rigidbody>().excludeLayers -= LayerMask.GetMask("Enemy");
+        }
+        
         
         OnShot();
     }

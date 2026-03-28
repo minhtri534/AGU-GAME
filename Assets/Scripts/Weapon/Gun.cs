@@ -130,7 +130,7 @@ public class Gun : MonoBehaviourPun
         {
             // PhotonNetwork.Instantiate requires the prefab to be in a Resources folder.
             // Pass basic projectile data so remote clients can configure the projectile identically.
-            string prefabName = stats.ProjectilePrefab.name;
+            string prefabName = $"Prefabs/Projectiles/{stats.ProjectilePrefab.name}";
             object[] instData = new object[] {
                 pv.ViewID,
                 (float)stats.GetDamage(),
@@ -146,7 +146,7 @@ public class Gun : MonoBehaviourPun
             catch
             {
                 // Fallback to local instantiate if prefab not found in Resources or instantiate fails
-                bulletObj = Instantiate(stats.ProjectilePrefab, firePoint.position, rotation);
+                //bulletObj = Instantiate(stats.ProjectilePrefab, firePoint.position, rotation);
             }
         }
         else
@@ -156,20 +156,18 @@ public class Gun : MonoBehaviourPun
         }
 
         // Configure collision layers and visuals (creator will also set these; remote clients get equivalent data from instantiationData)
-        var col = bulletObj.GetComponent<Collider>();
-        if (col != null)
+
+        if (isEnemyWeapon)
         {
-            if (isEnemyWeapon)
-            {
-                col.excludeLayers += LayerMask.GetMask("Enemy");
-                var mr = bulletObj.GetComponent<MeshRenderer>();
-                if (mr != null) mr.material = Resources.Load<Material>("Materials/BulletEnemy");
-            }
-            else
-            {
-                col.excludeLayers += LayerMask.GetMask("Player");
-            }
+            bulletObj.GetComponent<Projectile>().isEnemy = isEnemyWeapon;
+            var mr = bulletObj.GetComponent<MeshRenderer>();
+            if (mr != null) mr.material = Resources.Load<Material>("Materials/BulletEnemy");
         }
+        else
+        {
+            bulletObj.GetComponent<Projectile>().isEnemy = isEnemyWeapon;
+        }
+
 
         Projectile bullet = bulletObj.GetComponent<Projectile>();
 

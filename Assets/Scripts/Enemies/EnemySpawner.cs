@@ -53,9 +53,10 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < data.Waves[currentWave].ShortRat; i++)
         {
             SpawnEnemy(EnemyType.ShortRat);
-            yield return new WaitForSeconds(0.3f);
+            
             aliveEnemies++;
         }
+        yield return new WaitForSeconds(0.3f);
     }
 
     void SpawnEnemy(EnemyType type)
@@ -90,17 +91,17 @@ public class EnemySpawner : MonoBehaviour
             switch (type)
             {
                 case EnemyType.TallRat:
-                    gun.inventory.SwapBehaviourModifierComponent(0, new TallRatBehaviourComponent());
+                    gun.inventory.SwapBehaviourModifierComponent(1, new TallRatBehaviourComponent());
                     controller.StateMachine = new TallRatStateMachine();
                     enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/tall_rat_idle");
                     break;
                 case EnemyType.FatRat:
-                    gun.inventory.SwapBehaviourModifierComponent(0, new FatRatBehaviourComponent());
+                    gun.inventory.SwapBehaviourModifierComponent(1, new FatRatBehaviourComponent());
                     controller.StateMachine = new FatRatStateMachine();
                     enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/fat_rat_idle");
                     break;
                 case EnemyType.ShortRat:
-                    gun.inventory.SwapBehaviourModifierComponent(0, new ShortRatBehaviourComponent());
+                    gun.inventory.SwapBehaviourModifierComponent(1, new ShortRatBehaviourComponent());
                     controller.StateMachine = new ShortRatStateMachine();
                     enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/short_rat_idle");
                     break;

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerController : CharacterController
 {
     [Header("Stats")]
@@ -72,6 +73,13 @@ public class PlayerController : CharacterController
             if (input != null && motor != null)
             {
                 Vector3 moveDir = input.GetMovement();
+                if (moveDir == Vector3.zero)
+            {
+                GetComponent<Animator>().SetTrigger("Idle");
+            } else
+            {
+                GetComponent<Animator>().SetTrigger("Move");
+            }
                 motor.Move(moveDir);
             }
 

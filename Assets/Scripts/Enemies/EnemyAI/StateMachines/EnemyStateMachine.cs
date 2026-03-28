@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class EnemyStateMachine
@@ -30,19 +30,28 @@ public abstract class EnemyStateMachine
             Parameters[name].SetValueBool(value);
         }
     }
+
     public void SetParameterTrigger(string name)
     {
+        // Kiểm tra xem Key có tồn tại trong Dictionary không trước khi dùng
+        if (!Parameters.ContainsKey(name))
+        {
+            Debug.LogWarning($"StateMachine: Parameter '{name}' không tồn tại!");
+            return;
+        }
+
         if (Parameters[name].Type == ParameterType.Trigger)
         {
             foreach (var transition in ActiveState.Transitions)
             {
-                if (transition.TriggerName.Equals(name))
+                if (transition.TriggerName != null && transition.TriggerName.Equals(name))
                 {
                     TransitionState(transition.NextState);
                 }
             }
         }
     }
+
     public abstract void Start();
     public void Update()
     {

@@ -32,6 +32,11 @@ public class PlayerController : CharacterController
         {
             input = new KeyboardInput();
             motor = new PlayerMotor(rb, stats.Speed);
+            CameraFollow cam = FindObjectOfType<CameraFollow>();
+            if (cam != null)
+            {
+                cam.SetTarget(this.transform);
+            }
         }
 
         skill = GetComponent<IPlayerSkill>();
@@ -57,13 +62,23 @@ public class PlayerController : CharacterController
 
     void FixedUpdate()
     {
-        if (photonView.IsMine && input != null && motor != null)
+        // QUAN TRỌNG: Chỉ chạy logic di chuyển và xây map cho CHÍNH BẠN (Local Player)
+        if (photonView.IsMine)
         {
-            Vector3 moveDir = input.GetMovement();
-            motor.Move(moveDir);
+            // 1. Logic di chuyển
+            if (input != null && motor != null)
+            {
+                Vector3 moveDir = input.GetMovement();
+                motor.Move(moveDir);
+            }
+
+            // 2. Cập nhật map 3x3 (Chỉ cập nhật dựa trên vị trí của chính bạn)
+            if (RoomManager.instance != null)
+            {
+                RoomManager.instance.UpdateCurrentRoomByWorldPos(transform.position);
+            }
         }
     }
-
     public RuntimeCharacterStats GetStats()
     {
         CheckStats();

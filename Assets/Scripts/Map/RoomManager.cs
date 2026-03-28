@@ -61,7 +61,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("<color=green>Đã vào phòng thành công!</color>");
 
         // Spawn Player
-        GameObject p = PhotonNetwork.Instantiate(playerPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+        //GameObject p = PhotonNetwork.Instantiate(playerPrefab, new Vector3(0, 2, 0), Quaternion.identity);
 
         // Gán tên ngẫu nhiên
         PhotonNetwork.LocalPlayer.NickName = "Tester_" + Random.Range(10, 99);

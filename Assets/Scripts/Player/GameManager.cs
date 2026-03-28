@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform spawnPoint;
     public EnemySpawner spawner;
 
-    private string playerPrefabPath = "Prefabs/Player";
+    private string playerPrefabPath = "Player";
 
     public void SpawnHealer()
     {

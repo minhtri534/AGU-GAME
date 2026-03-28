@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -64,10 +65,10 @@ public class EnemySpawner : MonoBehaviour
         if (Physics.Raycast(randomXZ, Vector3.down, out hit, 50f))
         {
             Vector3 spawnPos = hit.point;
-            spawnPos.y = 1f; 
+            spawnPos.y = 1f;
 
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-
+            GameObject enemy = PhotonNetwork.Instantiate("EnemyPrefabName", spawnPos, Quaternion.identity);
+            
             EnemyController controller = enemy.GetComponent<EnemyController>();
             // WARNING: TEST CODE
             // REMOVE AFTER TESTING

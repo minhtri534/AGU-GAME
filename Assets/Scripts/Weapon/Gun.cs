@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
 /// <summary>
 /// The gun, can be used by either the player or the enemy
 /// </summary>
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviourPun
 {
     [Header("Settings")]
     public bool isEnemyWeapon = false;
@@ -35,8 +36,19 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            GunInput = gameObject.AddComponent<GunInput>();
-            AimTarget = new GunAimTargetPlayer();
+            // If this object is networked by Photon, only the local owner should handle input
+            var pv = GetComponent<PhotonView>();
+            if (pv == null || pv.IsMine)
+            {
+                GunInput = gameObject.AddComponent<GunInput>();
+                AimTarget = new GunAimTargetPlayer();
+            }
+            else
+            {
+                // Remote players should not process local input — leave GunInput null so Update() skips
+                GunInput = null;
+                AimTarget = null;
+            }
         }
         StartCoroutine(RestoreMana());
     }

@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class BerserkerSkill : MonoBehaviour, IPlayerSkill
+public class BerserkerSkill : MonoBehaviourPun, IPlayerSkill
 {
     private Gun gun;
     private GunStats gunStats;
@@ -9,36 +10,27 @@ public class BerserkerSkill : MonoBehaviour, IPlayerSkill
 
     void Awake()
     {
-        gun = GetComponentInChildren<Gun>();  
-        gunStats = gun.GetStats();           
+        gun = GetComponentInChildren<Gun>();
+        if (gun != null) gunStats = gun.GetStats();
     }
 
     public void Activate()
     {
-        if (!isActive)
+        if (!isActive && gunStats != null)
             StartCoroutine(BuffCoroutine());
     }
 
     IEnumerator BuffCoroutine()
     {
         isActive = true;
-
         float bonusDamage = 30f;
-
         float originalDamage = gunStats.GetDamage();
 
-        Debug.Log($"[Berserker] Gun Damage BEFORE: {originalDamage}");
-
         gunStats.SetDamage(originalDamage + bonusDamage);
-
-        Debug.Log($"[Berserker] Gun Damage AFTER BUFF: {gunStats.GetDamage()}");
 
         yield return new WaitForSeconds(5f);
 
         gunStats.SetDamage(originalDamage);
-
-        Debug.Log($"[Berserker] Gun Damage AFTER END: {gunStats.GetDamage()}");
-
         isActive = false;
     }
 }

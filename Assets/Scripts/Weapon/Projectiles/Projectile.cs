@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 /// <summary>
 /// Projectile class for all projectiles
 /// </summary>
 
 [RequireComponent(typeof(Rigidbody))] // Tự động thêm Rigidbody nếu chưa có
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IPunInstantiateMagicCallback
 {
     public float Speed;
     public float LifeTime;
@@ -34,6 +36,49 @@ public class Projectile : MonoBehaviour
         rb.useGravity = false; 
         
         OnShot();
+    }
+
+    // Called on remote instances when created via PhotonNetwork.Instantiate
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        var pv = GetComponent<PhotonView>();
+        if (pv != null && pv.InstantiationData != null)
+        {
+            object[] d = pv.InstantiationData;
+            try
+            {
+                if (d.Length >= 6)
+                {
+                    int ownerViewId = Convert.ToInt32(d[0]);
+                    Damage = Convert.ToSingle(d[1]);
+                    Speed = Convert.ToSingle(d[2]);
+                    LifeTime = Convert.ToSingle(d[3]);
+                    Size = Convert.ToSingle(d[4]);
+                    bool isEnemy = Convert.ToBoolean(d[5]);
+
+                    // Try to find owner Gun by PhotonView id
+                    try
+                    {
+                        var ownerPV = PhotonView.Find(ownerViewId);
+                        if (ownerPV != null)
+                        {
+                            ProjectileOwner = ownerPV.GetComponent<Gun>();
+                        }
+                    }
+                    catch { }
+
+                    var col = GetComponent<Collider>();
+                    if (col != null)
+                    {
+                        if (isEnemy) col.excludeLayers += LayerMask.GetMask("Enemy");
+                        else col.excludeLayers += LayerMask.GetMask("Player");
+                    }
+                    var mr = GetComponent<MeshRenderer>();
+                    if (mr != null && isEnemy) mr.material = Resources.Load<Material>("Materials/BulletEnemy");
+                }
+            }
+            catch { }
+        }
     }
     void Update()
     {

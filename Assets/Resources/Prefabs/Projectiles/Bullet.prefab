@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3939928276127486648}
   - component: {fileID: 7906027914785098653}
   - component: {fileID: 1127584370530864959}
+  - component: {fileID: -1689367892580081855}
   m_Layer: 6
   m_Name: Bullet
   m_TagString: Untagged
@@ -112,6 +113,7 @@ MonoBehaviour:
   Size: 0
   Damage: 0
   rb: {fileID: 0}
+  ProjectileOwner: {fileID: 0}
 --- !u!65 &6398152880187675172
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -367,3 +369,25 @@ MonoBehaviour:
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
   m_ObsoleteContactShadows: 0
+--- !u!114 &-1689367892580081855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361525364898386357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

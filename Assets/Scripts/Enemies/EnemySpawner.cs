@@ -67,7 +67,7 @@ public class EnemySpawner : MonoBehaviour
             Vector3 spawnPos = hit.point;
             spawnPos.y = 1f;
 
-            GameObject enemy = PhotonNetwork.Instantiate("EnemyPrefabName", spawnPos, Quaternion.identity);
+            GameObject enemy = PhotonNetwork.Instantiate("Prefabs/Enemies/Enemy", spawnPos, Quaternion.identity);
             
             EnemyController controller = enemy.GetComponent<EnemyController>();
             // WARNING: TEST CODE

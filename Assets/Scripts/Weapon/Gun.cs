@@ -43,6 +43,8 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        if (GunInput == null || AimTarget == null || firePoint == null) return;
+
         // Fallback if no type modifier component is equipped
         if (inventory.GetTypeModifierComponent() != null && inventory.GetTypeModifierComponent().OverrideDefaultGunControl)
         {

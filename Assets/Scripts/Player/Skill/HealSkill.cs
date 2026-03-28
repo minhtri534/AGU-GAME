@@ -1,7 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class HealerSkill : MonoBehaviour, IPlayerSkill
+public class HealerSkill : MonoBehaviourPun, IPlayerSkill
 {
     private RuntimeCharacterStats stats;
     private bool isHealing = false;
@@ -19,12 +20,12 @@ public class HealerSkill : MonoBehaviour, IPlayerSkill
         {
             if (stats.CurrentMP >= 20f)
             {
-                stats.UseMP(20f);
+                if (photonView.IsMine) stats.UseMP(20f);
                 StartCoroutine(HealCoroutine());
             }
             else
             {
-                Debug.Log("[Healer] Not enough MP!");
+                if (photonView.IsMine) Debug.Log($"[Healer] FAILED: {photonView.Owner.NickName} not enough MP!");
             }
         }
     }
@@ -32,10 +33,11 @@ public class HealerSkill : MonoBehaviour, IPlayerSkill
     IEnumerator HealCoroutine()
     {
         isHealing = true;
-
         float duration = 10f;
         float timer = 0f;
         float healAmountPerSecond = 20f;
+
+        Debug.Log($"[Healer] SKILL START: Player {photonView.Owner.NickName} started healing at {Time.time}s. Target HP: {stats.CurrentHP}");
 
         while (timer < duration)
         {
@@ -44,11 +46,14 @@ public class HealerSkill : MonoBehaviour, IPlayerSkill
             float newHP = stats.CurrentHP + healAmountPerSecond;
             stats.SetCurrentHP(newHP);
 
-            Debug.Log($"[Healer] Healing... Current HP: {stats.CurrentHP}");
+            // Log mỗi nhịp hồi máu nếu bạn muốn theo dõi sát (có thể bỏ dòng này nếu quá nhiều log)
+            // Debug.Log($"[Healer] TICK: {photonView.Owner.NickName} HP is now {stats.CurrentHP}");
 
             yield return new WaitForSeconds(1f);
             timer += 1f;
         }
+
+        Debug.Log($"[Healer] SKILL END: Healing finished for {photonView.Owner.NickName} at {Time.time}s. Final HP: {stats.CurrentHP}");
 
         isHealing = false;
         StartCoroutine(CooldownCoroutine());
@@ -57,11 +62,12 @@ public class HealerSkill : MonoBehaviour, IPlayerSkill
     IEnumerator CooldownCoroutine()
     {
         isCooldown = true;
-        Debug.Log("[Healer] Skill is on Cooldown...");
+        float cooldownTime = 5f;
+        Debug.Log($"[Healer] COOLDOWN: Started for {photonView.Owner.NickName} at {Time.time}s (Duration: {cooldownTime}s)");
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(cooldownTime);
 
         isCooldown = false;
-        Debug.Log("[Healer] Skill Ready!");
+        Debug.Log($"[Healer] READY: Player {photonView.Owner.NickName} skill is ready at {Time.time}s");
     }
 }

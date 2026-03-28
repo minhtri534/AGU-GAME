@@ -10,7 +10,6 @@ public class PlayerController : CharacterController
     private IMovementInput input;
     private PlayerMotor motor;
     private IPlayerSkill skill;
-
     private PhotonView photonView;
 
     void Awake()
@@ -57,16 +56,20 @@ public class PlayerController : CharacterController
 
         if (Keyboard.current.xKey.wasPressedThisFrame)
         {
-            skill?.Activate();
+            photonView.RPC("RPC_ActivateSkill", RpcTarget.AllViaServer);
         }
+    }
+
+    [PunRPC]
+    void RPC_ActivateSkill()
+    {
+        skill?.Activate();
     }
 
     void FixedUpdate()
     {
-        // QUAN TRỌNG: Chỉ chạy logic di chuyển và xây map cho CHÍNH BẠN (Local Player)
         if (photonView.IsMine)
         {
-            // 1. Logic di chuyển
             if (input != null && motor != null)
             {
                 Vector3 moveDir = input.GetMovement();
@@ -80,13 +83,13 @@ public class PlayerController : CharacterController
                 motor.Move(moveDir);
             }
 
-            // 2. Cập nhật map 3x3 (Chỉ cập nhật dựa trên vị trí của chính bạn)
             if (RoomManager.instance != null)
             {
                 RoomManager.instance.UpdateCurrentRoomByWorldPos(transform.position);
             }
         }
     }
+
     public RuntimeCharacterStats GetStats()
     {
         CheckStats();

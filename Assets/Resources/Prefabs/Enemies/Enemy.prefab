@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: -8332370851693667060}
   - component: {fileID: 2959773473993396338}
   - component: {fileID: 6731356319618111330}
+  - component: {fileID: -1258768425401801964}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -406,3 +407,19 @@ MonoBehaviour:
   isEnemyWeapon: 1
   firePoint: {fileID: 8557275308800102279}
   GunInput: {fileID: 0}
+--- !u!114 &-1258768425401801964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660400386398845008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b82caf50d8bf8b43a3fc7537fac5e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainSnap
+  heightOffset: 1
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 8

@@ -18,8 +18,6 @@ public class EnemyController : CharacterController
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         rb.useGravity = true;
-        StateMachine.Enemy = this;
-        StateMachine.Start();
     }
 
     void Start()
@@ -30,6 +28,8 @@ public class EnemyController : CharacterController
         stats.IsHurt.AddListener(delegate{StateMachine.SetParameterTrigger("TakeDamageTrigger");});
         // TODO: replace tag with specific individual players instead for multiplayer
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        StateMachine.Enemy = this;
+        StateMachine.Start();
     }
 
     void FixedUpdate()

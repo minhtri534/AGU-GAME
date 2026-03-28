@@ -329,13 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   rb: {fileID: 0}
   statsData: {fileID: 11400000, guid: c984e53003529ab45b340530affe30f0, type: 2}
-  stoppingDistance: 2
-  chaseTimeRange: {x: 1, y: 3}
-  orbitTimeRange: {x: 1, y: 3}
-  retreatTimeRange: {x: 3, y: 2}
   player: {fileID: 0}
-  stateTimer: 0
-  orbitDir: 0
 --- !u!95 &8849681238109309118
 Animator:
   serializedVersion: 7

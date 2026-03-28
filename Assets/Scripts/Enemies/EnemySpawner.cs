@@ -9,9 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
 
     [Header("Wave Settings")]
-    public int minEnemiesPerWave = 5;
-    public int maxEnemiesPerWave = 10;
-    public int totalWaves = 3;
+    public WaveData data;
 
     [Header("Spawn Area")]
     public float spawnRadius = 10f;
@@ -26,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
-        while (currentWave < totalWaves)
+        while (currentWave < data.Waves.Count)
         {
             yield return StartCoroutine(SpawnWave());
 
@@ -40,18 +38,27 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
-        int amount = Random.Range(minEnemiesPerWave, maxEnemiesPerWave + 1);
-
-        aliveEnemies = amount;
-
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < data.Waves[currentWave].FatRat; i++)
         {
-            SpawnEnemy();
+            SpawnEnemy(EnemyType.FatRat);
+            //yield return new WaitForSeconds(0.3f);
+            aliveEnemies++;
+        }
+        for (int i = 0; i < data.Waves[currentWave].TallRat; i++)
+        {
+            SpawnEnemy(EnemyType.TallRat);
+            //yield return new WaitForSeconds(0.3f);
+            aliveEnemies++;
+        }
+        for (int i = 0; i < data.Waves[currentWave].ShortRat; i++)
+        {
+            SpawnEnemy(EnemyType.ShortRat);
             yield return new WaitForSeconds(0.3f);
+            aliveEnemies++;
         }
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy(EnemyType type)
     {
         Vector3 randomXZ = transform.position +
                            new Vector3(
@@ -68,16 +75,37 @@ public class EnemySpawner : MonoBehaviour
             spawnPos.y = 1f;
 
             GameObject enemy = PhotonNetwork.Instantiate("Prefabs/Enemies/Enemy", spawnPos, Quaternion.identity);
-            
-            EnemyController controller = enemy.GetComponent<EnemyController>();
-            // WARNING: TEST CODE
-            // REMOVE AFTER TESTING
 
-            enemy.AddComponent<Gun>();
-            enemy.GetComponent<Gun>().isEnemyWeapon = true;
-            enemy.GetComponent<Gun>().firePoint = enemy.transform;
+            EnemyController controller = enemy.GetComponent<EnemyController>();
+
+            // Set enemy data
+
+            var gun = enemy.AddComponent<Gun>();
+
             
-            // END OF TEST CODE
+            gun.isEnemyWeapon = true;
+            gun.firePoint = enemy.transform;
+
+            // Per enemy data
+            switch (type)
+            {
+                case EnemyType.TallRat:
+                    gun.inventory.SwapBehaviourModifierComponent(0, new TallRatBehaviourComponent());
+                    controller.StateMachine = new TallRatStateMachine();
+                    enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/tall_rat_idle");
+                    break;
+                case EnemyType.FatRat:
+                    gun.inventory.SwapBehaviourModifierComponent(0, new FatRatBehaviourComponent());
+                    controller.StateMachine = new FatRatStateMachine();
+                    enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/fat_rat_idle");
+                    break;
+                case EnemyType.ShortRat:
+                    gun.inventory.SwapBehaviourModifierComponent(0, new ShortRatBehaviourComponent());
+                    controller.StateMachine = new ShortRatStateMachine();
+                    enemy.GetComponentInChildren<MeshRenderer>().material.mainTexture = Resources.Load<Texture>("Sprites/short_rat_idle");
+                    break;
+            }
+
 
             controller.OnEnemyDeath += HandleEnemyDeath;
         }
@@ -87,4 +115,11 @@ public class EnemySpawner : MonoBehaviour
     {
         aliveEnemies--;
     }
+}
+
+public enum EnemyType
+{
+    TallRat,
+    FatRat,
+    ShortRat,
 }

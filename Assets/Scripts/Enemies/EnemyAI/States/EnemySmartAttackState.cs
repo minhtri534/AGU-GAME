@@ -1,24 +1,20 @@
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-public class EnemyAttackState : IEnemyState
+public class EnemySmartAttackState : EnemyState
 {
     private Gun gun;
     private Coroutine attackCoroutine;
-    public void Enter(EnemyController enemy)
+    public override void Enter()
     {
-        enemy.stateTimer = Random.Range(
-            enemy.chaseTimeRange.x,
-            enemy.chaseTimeRange.y
-        );
+        enemy.GetComponent<Animator>().SetTrigger("Move");
         gun = enemy.GetComponent<Gun>();
         var aim = (GunAimTargetEnemy)gun.AimTarget;
         aim.targetPos = enemy.player;
-        attackCoroutine = enemy.StartCoroutine(Attack(enemy));
+        attackCoroutine = enemy.StartCoroutine(Attack());
     }
 
-    public void Update(EnemyController enemy)
+    public override void Update()
     {
         Vector3 distance = enemy.player.position - enemy.transform.position;
         distance.y = 0f;
@@ -27,14 +23,14 @@ public class EnemyAttackState : IEnemyState
         enemy.rb.linearVelocity = Vector3.Lerp(enemy.rb.linearVelocity, new Vector3(move.x, 0, move.z), Time.deltaTime * 7);
     }
 
-    private IEnumerator Attack(EnemyController enemy)
+    private IEnumerator Attack()
     {
         ((GunInputEnemy)gun.GunInput).Click();
         yield return new WaitForSeconds(gun.stats.GetReloadTime());
-        attackCoroutine = enemy.StartCoroutine(Attack(enemy));
+        attackCoroutine = enemy.StartCoroutine(Attack());
     }
 
-    public void Exit(EnemyController enemy)
+    public override void Exit()
     {
         enemy.StopCoroutine(attackCoroutine);
     }
